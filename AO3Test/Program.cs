@@ -45,7 +45,7 @@ internal class Program
 
         if (hits.success & kudos.success & words.success & chapters.success)
         {
-            Stats stats = new()
+            StatModel stats = new()
             {
                 Hits = hits.result,
                 Kudos = kudos.result,
@@ -68,7 +68,7 @@ internal class Program
 
     private static (bool success, int result) ConvertToInt(string value) => (Int32.TryParse(value, out int result), result);
 
-    private static void SaveStatsToFile(Stats stats, string path)
+    private static void SaveStatsToFile(StatModel stats, string path)
     {
         Console.WriteLine($"Saving Data to: \"{path}\"");
         File.AppendAllText(path, $"{stats}\n");

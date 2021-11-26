@@ -1,6 +1,6 @@
 ﻿namespace AO3Test;
 
-public class Stats
+public class StatModel
 {
     public int Hits { get; set; }
     public int Kudos { get; set; }
