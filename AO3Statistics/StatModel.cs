@@ -10,4 +10,8 @@ public class StatModel
 
     public override string ToString()
         => String.Join(',', Time.ToString("O"), Kudos, Words, Chapters, Hits);
+
+    public string ToString(bool readable) =>
+        $"Time: {Time}\nHits: {Hits}\nKudos: {Kudos}\nWords: {Words}\nChapters: {Chapters}";
+
 }
