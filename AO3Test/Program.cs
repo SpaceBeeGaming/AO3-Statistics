@@ -1,7 +1,5 @@
 ﻿using AO3Statistics;
 
-using HtmlAgilityPack;
-
 namespace AO3Test;
 
 internal class Program
@@ -26,49 +24,63 @@ internal class Program
             return 1;
         }
 
-        HtmlDocument document = new HtmlWeb().Load(uri);
+        //HtmlDocument document = new HtmlWeb().Load(uri);
         var filepath = args[1];
 
         //var document = new HtmlDocument();
         //document.Load(@"C:\Users\janne\Desktop\html.html");
 
-        var node = NavigateToNode(document);
+        //var node = Navigator.NavigateToNode(document);
 
-        if (node is null)
+        AO3Statistics.Navigator navigator;
+        try
         {
-            Console.WriteLine("Failed to Navigate Node tree. (AO3 could have changed page format.)");
+            navigator = new(uri);
+        }
+        catch (NavigatorException ex)
+        {
+            Console.WriteLine(ex.Message);
+            Console.WriteLine($"Path used: \"{ex.Path}\"");
+            if (ex.InnerException is not null)
+            {
+                Console.WriteLine($"Inner Exception:\n{ex.InnerException}");
+            }
+#if DEBUG
+            throw;
+#else
             return 1;
+#endif
         }
 
-        var hits = ConvertToInt(ExtractValue(node, "hits"));
-        var kudos = ConvertToInt(ExtractValue(node, "kudos"));
-        var words = ConvertToInt(ExtractValue(node, "words"));
-        var chapters = ConvertToInt(ExtractValue(node, "chapters").Split('/')[0]);
+        var hits = ConvertToInt(navigator.GetValue(StatTypes.Hits));
+        var kudos = ConvertToInt(navigator.GetValue(StatTypes.Kudos));
+        var words = ConvertToInt(navigator.GetValue(StatTypes.Words));
+        var chapters = ConvertToInt(navigator.GetValue(StatTypes.Chapters).Split('/')[0]);
 
-        if (hits.success & kudos.success & words.success & chapters.success)
+        if (hits.IsSuccess & kudos.IsSuccess & words.IsSuccess & chapters.IsSuccess)
         {
             StatModel stats = new()
             {
-                Hits = hits.result,
-                Kudos = kudos.result,
-                Words = words.result,
-                Chapters = chapters.result,
+                Hits = hits.value,
+                Kudos = kudos.value,
+                Words = words.value,
+                Chapters = chapters.value,
                 Time = DateTime.Now
             };
 
-            Console.WriteLine(stats);
+            Console.WriteLine(stats.ToString(true));
 
             SaveStatsToFile(stats, filepath);
             return 0;
         }
         else
         {
-            Console.WriteLine("Error Parsong Data.");
+            Console.WriteLine("Error Parsing Data.");
             return 1;
         }
     }
 
-    private static (bool success, int result) ConvertToInt(string value) => (Int32.TryParse(value, out int result), result);
+    private static (bool IsSuccess, int value) ConvertToInt(string? value) => (Int32.TryParse(value, out int result), result);
 
     private static void SaveStatsToFile(StatModel stats, string path)
     {
@@ -76,27 +88,4 @@ internal class Program
         File.AppendAllText(path, $"{stats}\n");
     }
 
-    private static string ExtractValue(HtmlNode node, string name)
-        => node.SelectSingleNode($"./dd[@class='{name}']").InnerText;
-
-    private static HtmlNode? NavigateToNode(HtmlDocument document)
-    {
-        try
-        {
-            // The location within the Html document where the statistics are located.
-            return document.DocumentNode.SelectSingleNode("//body")
-                                            .SelectSingleNode("./div[@class='wrapper']") //outer
-                                            .SelectSingleNode("./div[@class='wrapper']") //inner
-                                            .SelectSingleNode("./div[@class='chapters-show region']") //main
-                                            .SelectSingleNode("./div[@class='work']")
-                                            .SelectSingleNode("./div[@class='wrapper']")
-                                            .SelectSingleNode("./dl")
-                                            .SelectSingleNode("./dd[@class='stats']")
-                                            .SelectSingleNode("./dl");
-        }
-        catch (NullReferenceException)
-        {
-            return null;
-        }
-    }
 }
