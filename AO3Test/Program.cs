@@ -1,4 +1,6 @@
-﻿using HtmlAgilityPack;
+﻿using AO3Statistics;
+
+using HtmlAgilityPack;
 
 namespace AO3Test;
 

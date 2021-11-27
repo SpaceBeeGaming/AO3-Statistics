@@ -15,4 +15,8 @@
 		<PackageReference Include="HtmlAgilityPack" Version="1.11.38" />
 	</ItemGroup>
 
+	<ItemGroup>
+	  <ProjectReference Include="..\AO3Statistics\AO3Statistics.csproj" />
+	</ItemGroup>
+
 </Project>

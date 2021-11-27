@@ -1,4 +1,4 @@
-﻿namespace AO3Test;
+﻿namespace AO3Statistics;
 
 public class StatModel
 {
@@ -8,6 +8,6 @@ public class StatModel
     public int Chapters { get; set; }
     public DateTime Time { get; set; }
 
-    public override string ToString() 
+    public override string ToString()
         => String.Join(',', Time.ToString("O"), Kudos, Words, Chapters, Hits);
 }
