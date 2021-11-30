@@ -32,7 +32,7 @@ internal class Program
 
         //var node = Navigator.NavigateToNode(document);
 
-        AO3Statistics.Navigator navigator;
+        Navigator navigator;
         try
         {
             navigator = new(uri);
@@ -52,10 +52,10 @@ internal class Program
 #endif
         }
 
-        var hits = ConvertToInt(navigator.GetValue(StatTypes.Hits));
-        var kudos = ConvertToInt(navigator.GetValue(StatTypes.Kudos));
-        var words = ConvertToInt(navigator.GetValue(StatTypes.Words));
-        var chapters = ConvertToInt(navigator.GetValue(StatTypes.Chapters).Split('/')[0]);
+        var hits = navigator.GetValue(StatTypes.Hits);
+        var kudos = navigator.GetValue(StatTypes.Kudos);
+        var words = navigator.GetValue(StatTypes.Words);
+        var chapters = navigator.GetValue(StatTypes.Chapters);
 
         if (hits.IsSuccess & kudos.IsSuccess & words.IsSuccess & chapters.IsSuccess)
         {
@@ -79,8 +79,6 @@ internal class Program
             return 1;
         }
     }
-
-    private static (bool IsSuccess, int value) ConvertToInt(string? value) => (Int32.TryParse(value, out int result), result);
 
     private static void SaveStatsToFile(StatModel stats, string path)
     {

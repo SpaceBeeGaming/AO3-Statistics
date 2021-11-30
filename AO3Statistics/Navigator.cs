@@ -1,4 +1,4 @@
-﻿using System;
+﻿using System.Net;
 using System.Xml.XPath;
 
 using HtmlAgilityPack;
@@ -28,7 +28,7 @@ public class Navigator
     /// <exception cref="NavigatorException"></exception>
     public Navigator(Uri uri, string? path = DefaultPath)
     {
-        _statisticsContainerNode = NavigateToNode(new HtmlWeb().Load(uri), path);
+        _statisticsContainerNode = NavigateToNode(new HtmlWeb().Load(uri, "GET"), path);
 
         if (_statisticsContainerNode is null)
         {
@@ -57,24 +57,22 @@ public class Navigator
         node.ChildNodes.Select(child => $"{child.Name}; {child.GetClasses().FirstOrDefault()}").ToList();
 
     /// <summary>
-    /// Extracts the specified stat from the <see cref="HtmlNode"/> obtained from <see cref="NavigateToNode(HtmlDocument, string?)"/>.
+    /// Gets the specified stat from the <see cref="HtmlNode"/> obtained from <see cref="NavigateToNode(HtmlDocument, string?)"/>.
     /// </summary>
     /// <param name="name"> Name of the stat to look up.</param>
     /// <returns>The value of the stat as <see cref="String"/> or <see cref="String.Empty"/> if not found.</returns>
-    public string GetValue(StatTypes name)
+    public (bool IsSuccess, int value) GetValue(StatTypes name)
     {
-        HtmlNode? statisticNode = _statisticsContainerNode.SelectSingleNode($"./dd[@class='{name.ToString().ToLowerInvariant()}']");
-
-        return name switch
+        HtmlNode? statisticNode = _statisticsContainerNode!.SelectSingleNode($"./dd[@class='{name.ToString().ToLowerInvariant()}']");
+        var intString = name switch
         {
             StatTypes.Hits or
             StatTypes.Kudos or
-            StatTypes.Words =>
-                statisticNode is not null ? statisticNode.InnerText : String.Empty,
-            StatTypes.Chapters =>
-                statisticNode is not null ? statisticNode.InnerText.Split('/')[0] : String.Empty,
-            _ =>
-                throw new NotImplementedException(),
+            StatTypes.Words => statisticNode is not null ? statisticNode.InnerText : null,
+            StatTypes.Chapters => statisticNode is not null ? statisticNode.InnerText.Split('/')[0] : null,
+            _ => throw new NotImplementedException(),
         };
+
+        return (Int32.TryParse(intString, out int result), result);
     }
 }
