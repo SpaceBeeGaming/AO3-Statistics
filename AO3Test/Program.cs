@@ -7,14 +7,24 @@ internal class Program
     private const string Website = "archiveofourown.org";
     private static int Main(string[] args)
     {
-        if (args.Length is not 2)
+        if (args.Length is not 2 or 3)
         {
             Console.WriteLine("Number of arguments doesnt match.");
             Console.WriteLine("Please provide:");
             Console.WriteLine("1) An web andress pointing to a fic on AO3.");
             Console.WriteLine("2) A path where .csv file is to be saved.");
+            Console.WriteLine("3) Optional switch '-m' that will ignore a check for existing entry from current date.");
 
             return 1;
+        }
+
+        var filepath = args[1];
+
+        if ((args.Length is not 3 || args[2] is not "-m") && IsCurrent(filepath))
+        {
+            Console.WriteLine("Entry already Exists for this date, skipping...");
+            Console.WriteLine("Add '-m' to the as a third argument to ignore this check.");
+            return 2;
         }
 
         Uri uri = new(args[0]);
@@ -25,7 +35,6 @@ internal class Program
         }
 
         //HtmlDocument document = new HtmlWeb().Load(uri);
-        var filepath = args[1];
 
         //var document = new HtmlDocument();
         //document.Load(@"C:\Users\janne\Desktop\html.html");
@@ -65,11 +74,10 @@ internal class Program
                 Kudos = kudos.value,
                 Words = words.value,
                 Chapters = chapters.value,
-                Time = DateTime.Now
+                DateTime = DateTime.Now
             };
 
             Console.WriteLine(stats.ToString(true));
-
             SaveStatsToFile(stats, filepath);
             return 0;
         }
@@ -85,5 +93,8 @@ internal class Program
         Console.WriteLine($"Saving Data to: \"{path}\"");
         File.AppendAllText(path, $"{stats}\n");
     }
+
+    private static bool IsCurrent(string path) =>
+        File.Exists(path) && StatModel.FromString(File.ReadLines(path).Last()).DateTime.Date >= DateTime.Now.Date;
 
 }
