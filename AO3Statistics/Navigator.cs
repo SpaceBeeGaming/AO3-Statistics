@@ -64,11 +64,11 @@ public class Navigator
     public (bool IsSuccess, int value) GetValue(StatTypes name)
     {
         HtmlNode? statisticNode = _statisticsContainerNode!.SelectSingleNode($"./dd[@class='{name.ToString().ToLowerInvariant()}']");
-        var intString = name switch
+        string? intString = name switch
         {
-            StatTypes.Kudos => statisticNode is not null ? statisticNode.InnerText : 0,
             StatTypes.Hits or
             StatTypes.Words => statisticNode is not null ? statisticNode.InnerText : null,
+            StatTypes.Kudos => statisticNode is not null ? statisticNode.InnerText : "0",
             StatTypes.Chapters => statisticNode is not null ? statisticNode.InnerText.Split('/')[0] : null,
             _ => throw new NotImplementedException(),
         };
