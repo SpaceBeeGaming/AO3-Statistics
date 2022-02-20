@@ -1,12 +1,11 @@
-﻿using System.Net;
-using System.Xml.XPath;
+﻿using System.Xml.XPath;
 
 using HtmlAgilityPack;
 
 namespace AO3Statistics;
 
 /// <summary>
-/// Provides Methods to extract statistic data from AO3 Html tree.
+/// Provides Methods to extract statistic data from AO3 HTML tree.
 /// </summary>
 public class Navigator
 {
@@ -18,9 +17,9 @@ public class Navigator
     public const string DefaultPath = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
-    /// Initializes a new isntance of the <see cref="Navigator"/> class.
+    /// Initializes a new instance of the <see cref="Navigator"/> class.
     /// </summary>
-    /// <param name="uri">The webaddress to fetch statistics from.</param>
+    /// <param name="uri">The web address to fetch statistics from.</param>
     /// <param name="path">
     /// Optional path to navigate to. Defaults to <see cref="DefaultPath"/>.
     /// Override when the default isn't working for some reason.
@@ -49,7 +48,7 @@ public class Navigator
     }
 
     /// <summary>
-    /// Returns all the children of the selected node. Useful when construcxting a custom path.
+    /// Returns all the children of the selected node. Useful when constructing a custom path.
     /// </summary>
     /// <param name="node"><see cref="HtmlNode"/> to index.</param>
     /// <returns>the children of the node.</returns>
