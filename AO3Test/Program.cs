@@ -74,7 +74,7 @@ internal class Program
                 Kudos = kudos.value,
                 Words = words.value,
                 Chapters = chapters.value,
-                DateTime = DateTime.Now
+                Date = DateTime.Now
             };
 
             Console.WriteLine(stats.ToString(true));
@@ -95,6 +95,6 @@ internal class Program
     }
 
     private static bool IsCurrent(string path) =>
-        File.Exists(path) && StatModel.FromString(File.ReadLines(path).Last()).DateTime.Date >= DateTime.Now.Date;
+        File.Exists(path) && StatModel.FromString(File.ReadLines(path).Last()).Date.Date >= DateTime.Now.Date;
 
 }
