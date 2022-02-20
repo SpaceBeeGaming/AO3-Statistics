@@ -15,7 +15,7 @@ public class Navigator
     /// The default path used by <see cref="NavigateToNode(HtmlDocument, string?)"/>.
     /// </summary>
     public const string DefaultPathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
-    public const string DefaultPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='work-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    public const string DefaultPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Navigator"/> class.
