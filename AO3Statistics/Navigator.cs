@@ -14,24 +14,25 @@ public class Navigator
     /// <summary>
     /// The default path used by <see cref="NavigateToNode(HtmlDocument, string?)"/>.
     /// </summary>
-    public const string DefaultPath = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    public const string DefaultPathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    public const string DefaultPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='work-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Navigator"/> class.
     /// </summary>
     /// <param name="uri">The web address to fetch statistics from.</param>
     /// <param name="path">
-    /// Optional path to navigate to. Defaults to <see cref="DefaultPath"/>.
+    /// Optional path to navigate to. Defaults to <see cref="DefaultPathMultiChapter"/>.
     /// Override when the default isn't working for some reason.
     /// </param>
     /// <exception cref="NavigatorException"></exception>
-    public Navigator(Uri uri, string? path = DefaultPath)
+    public Navigator(Uri uri, string? path)
     {
         _statisticsContainerNode = NavigateToNode(new HtmlWeb().Load(uri, "GET"), path);
 
         if (_statisticsContainerNode is null)
         {
-            throw new NavigatorException("Failed to navigate Node tree. (AO3 could have changed page format.)", path);
+            throw new NavigatorException("Failed to navigate Node tree. (AO3 could have changed page format.)", path, true);
         }
     }
 

@@ -9,9 +9,9 @@ internal class Program
     {
         if (args.Length is not 2 or 3)
         {
-            Console.WriteLine("Number of arguments doesnt match.");
+            Console.WriteLine("Number of arguments doesn't match.");
             Console.WriteLine("Please provide:");
-            Console.WriteLine("1) An web andress pointing to a fic on AO3.");
+            Console.WriteLine("1) An web address pointing to a fic on AO3.");
             Console.WriteLine("2) A path where .csv file is to be saved.");
             Console.WriteLine("3) Optional switch '-m' that will ignore a check for existing entry from current date.");
 
@@ -41,10 +41,10 @@ internal class Program
 
         //var node = Navigator.NavigateToNode(document);
 
-        Navigator navigator;
+        Navigator? navigator = null;
         try
         {
-            navigator = new(uri);
+            navigator = new(uri, Navigator.DefaultPathMultiChapter);
         }
         catch (NavigatorException ex)
         {
@@ -54,11 +54,38 @@ internal class Program
             {
                 Console.WriteLine($"Inner Exception:\n{ex.InnerException}");
             }
+
+            if (ex.IsRecoverable is null or false)
+            {
+
 #if DEBUG
-            throw;
+                throw;
 #else
             return 1;
 #endif
+            }
+        }
+
+        if (navigator is null)
+        {
+            try
+            {
+                navigator = new(uri, Navigator.DefaultPathSingleChapter);
+            }
+            catch (NavigatorException ex)
+            {
+                Console.WriteLine(ex.Message);
+                Console.WriteLine($"Path used: \"{ex.Path}\"");
+                if (ex.InnerException is not null)
+                {
+                    Console.WriteLine($"Inner Exception:\n{ex.InnerException}");
+                }
+#if DEBUG
+                throw;
+#else
+            return 1;
+#endif
+            }
         }
 
         var hits = navigator.GetValue(StatTypes.Hits);
