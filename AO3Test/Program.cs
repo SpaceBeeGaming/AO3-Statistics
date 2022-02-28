@@ -7,7 +7,7 @@ internal class Program
     private const string Website = "archiveofourown.org";
     private static int Main(string[] args)
     {
-        if (args.Length is not 2 or 3)
+        if (args.Length is not (2 or 3))
         {
             Console.WriteLine("Number of arguments doesn't match.");
             Console.WriteLine("Please provide:");
