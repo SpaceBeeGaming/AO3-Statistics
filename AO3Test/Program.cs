@@ -11,7 +11,7 @@ internal class Program
         {
             Console.WriteLine("Number of arguments doesn't match.");
             Console.WriteLine("Please provide:");
-            Console.WriteLine("1) An web address pointing to a fic on AO3.");
+            Console.WriteLine("1) A web address pointing to a fic on AO3.");
             Console.WriteLine("2) A path where .csv file is to be saved.");
             Console.WriteLine("3) Optional switch '-m' that will ignore a check for existing entry from current date.");
 
@@ -22,8 +22,8 @@ internal class Program
 
         if ((args.Length is not 3 || args[2] is not "-m") && IsCurrent(filepath))
         {
-            Console.WriteLine("Entry already Exists for this date, skipping...");
-            Console.WriteLine("Add '-m' to the as a third argument to ignore this check.");
+            Console.WriteLine("Entry already exists for this date, skipping...");
+            Console.WriteLine("Add '-m' as a third argument to ignore this check.");
             return 2;
         }
 
