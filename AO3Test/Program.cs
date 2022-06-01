@@ -2,7 +2,7 @@
 
 namespace AO3Test;
 
-internal class Program
+internal static class Program
 {
     private const string Website = "archiveofourown.org";
     private static int Main(string[] args)
