@@ -5,10 +5,21 @@
 /// </summary>
 public enum StatTypes
 {
-#pragma warning disable CS1591 // Missing XML comment for publicly visible type or member
+    /// <summary>
+    /// Number of hits on the fic.
+    /// </summary>
     Hits,
+
+    /// <summary>
+    /// Number of kudos on the fic.
+    /// </summary>
     Kudos,
+    /// <summary>
+    /// Word count of published chapters.
+    /// </summary>
     Words,
+    /// <summary>
+    /// Number of published chapters.
+    /// </summary>
     Chapters,
-#pragma warning restore CS1591 // Missing XML comment for publicly visible type or member
 }

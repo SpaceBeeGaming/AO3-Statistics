@@ -67,10 +67,14 @@ public sealed class Navigator
         node.ChildNodes.Select(child => $"{child.Name}; {child.GetClasses().FirstOrDefault()}").ToList();
 
     /// <summary>
-    /// Gets the specified stat from the <see cref="HtmlNode"/> obtained from <see cref="NavigateToNode(HtmlDocument, string?)"/>.
+    /// Gets the specified stat.
     /// </summary>
-    /// <param name="statType"> Name of the stat to look up.</param>
-    /// <returns>The value of the stat as <see cref="String"/> or <see cref="String.Empty"/> if not found.</returns>
+    /// <param name="statType"> Type of the stat to look up.</param>
+    /// <remarks>Return success behaves differently between <see cref="StatTypes"/>.<br/> i.e. Kudos will never fail, since they aren't in the tree if a fic has 0 kudos. </remarks>
+    /// <returns>
+    /// A <see cref="Boolean"/> which, if <see langword="true"/>, the <see cref="Int32"/> value associated.<br/>
+    /// or if <see langword="false"/> a 0.
+    /// </returns>
     public (bool IsSuccess, int value) GetValue(StatTypes statType)
     {
         HtmlNode? statisticNode = _statisticsContainerNode!.SelectSingleNode($"./dd[@class='{statType.ToString().ToLowerInvariant()}']");

@@ -11,7 +11,7 @@ public class StatModel
     public DateTime Date { get; set; }
 
     /// <summary>
-    /// Number of hits.
+    /// Number of hits on the fic.
     /// </summary>
     public int Hits { get; set; }
 
@@ -21,7 +21,7 @@ public class StatModel
     public int Kudos { get; set; }
 
     /// <summary>
-    /// Word count of the fic.
+    /// Word count of published chapters.
     /// </summary>
     public int Words { get; set; }
 
@@ -43,13 +43,15 @@ public class StatModel
     /// <param name="_">Value isn't relevant</param>
     /// <returns>
     /// A string formatted like:<br/>
+    /// <example>
     /// <code>
-    /// "Date: <see cref="Date"/><br/>
+    /// Date: <see cref="Date"/><br/>
     /// Hits: <see cref="Hits"/><br/>
     /// Kudos: <see cref="Kudos"/><br/>
     /// Words: <see cref="Words"/><br/>
-    /// Chapters: <see cref="Chapters"/>"
+    /// Chapters: <see cref="Chapters"/>
     /// </code>
+    /// </example>
     /// </returns>
     public string ToString(bool _) =>
         $"Date: {Date}\nHits: {Hits}\nKudos: {Kudos}\nWords: {Words}\nChapters: {Chapters}";
