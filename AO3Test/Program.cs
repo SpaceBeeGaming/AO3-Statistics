@@ -50,14 +50,9 @@ internal class Program
         {
             Console.WriteLine(ex.Message);
             Console.WriteLine($"Path used: \"{ex.Path}\"");
-            if (ex.InnerException is not null)
-            {
-                Console.WriteLine($"Inner Exception:\n{ex.InnerException}");
-            }
-
+            
             if (ex.IsRecoverable is null or false)
             {
-
 #if DEBUG
                 throw;
 #else
@@ -76,10 +71,6 @@ internal class Program
             {
                 Console.WriteLine(ex.Message);
                 Console.WriteLine($"Path used: \"{ex.Path}\"");
-                if (ex.InnerException is not null)
-                {
-                    Console.WriteLine($"Inner Exception:\n{ex.InnerException}");
-                }
 #if DEBUG
                 throw;
 #else
