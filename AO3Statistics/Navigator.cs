@@ -67,9 +67,9 @@ public class Navigator
         string? intString = statType switch
         {
             StatTypes.Hits or
-            StatTypes.Words => statisticNode is not null ? statisticNode.InnerText : null,
+            StatTypes.Words => statisticNode?.InnerText,
             StatTypes.Kudos => statisticNode is not null ? statisticNode.InnerText : "0",
-            StatTypes.Chapters => statisticNode is not null ? statisticNode.InnerText.Split('/')[0] : null,
+            StatTypes.Chapters => statisticNode?.InnerText.Split('/')[0],
             _ => throw new NotImplementedException(),
         };
 
