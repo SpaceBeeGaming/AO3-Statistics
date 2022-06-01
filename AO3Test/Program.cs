@@ -44,7 +44,7 @@ internal class Program
         Navigator? navigator = null;
         try
         {
-            navigator = new(uri, Navigator.DefaultPathMultiChapter);
+            navigator = new(uri, Navigator.PathMultiChapter);
         }
         catch (NavigatorException ex)
         {
@@ -65,7 +65,7 @@ internal class Program
         {
             try
             {
-                navigator = new(uri, Navigator.DefaultPathSingleChapter);
+                navigator = new(uri, Navigator.PathSingleChapter);
             }
             catch (NavigatorException ex)
             {

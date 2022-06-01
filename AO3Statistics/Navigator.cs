@@ -5,25 +5,35 @@ using HtmlAgilityPack;
 namespace AO3Statistics;
 
 /// <summary>
-/// Provides Methods to extract statistic data from AO3 HTML tree.
+/// Facilitates fetching and extraction of statistic data from AO3 fic HTML tree.
 /// </summary>
 public sealed class Navigator
 {
     private readonly HtmlNode? _statisticsContainerNode;
 
     /// <summary>
-    /// The default path used by <see cref="NavigateToNode(HtmlDocument, string?)"/>.
+    /// HTML XPath for the statistics of a multi-chapter fic on AO3.
     /// </summary>
-    public const string DefaultPathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
-    public const string DefaultPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    /// <remarks>
+    /// Verified working on 1.6.2022
+    /// </remarks>
+    public const string PathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="Navigator"/> class.
+    /// HTML XPath for the statistics of a single-chapter fic on AO3.
+    /// </summary>
+    /// <remarks>
+    /// Verified working on 1.6.2022
+    /// </remarks>
+    public const string PathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="Navigator"/> class and extracts the statistics element from the HTML tree.
     /// </summary>
     /// <param name="uri">The web address to fetch statistics from.</param>
     /// <param name="path">
-    /// Optional path to navigate to. Defaults to <see cref="DefaultPathMultiChapter"/>.
-    /// Override when the default isn't working for some reason.
+    /// The XPath pointing to the statistics element.<br/>
+    /// See <see cref="PathMultiChapter"/> and <see cref="PathSingleChapter"/>
     /// </param>
     /// <exception cref="NavigatorException"></exception>
     public Navigator(Uri uri, string? path)
