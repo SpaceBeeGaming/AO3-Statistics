@@ -59,12 +59,12 @@ public class Navigator
     /// <summary>
     /// Gets the specified stat from the <see cref="HtmlNode"/> obtained from <see cref="NavigateToNode(HtmlDocument, string?)"/>.
     /// </summary>
-    /// <param name="name"> Name of the stat to look up.</param>
+    /// <param name="statType"> Name of the stat to look up.</param>
     /// <returns>The value of the stat as <see cref="String"/> or <see cref="String.Empty"/> if not found.</returns>
-    public (bool IsSuccess, int value) GetValue(StatTypes name)
+    public (bool IsSuccess, int value) GetValue(StatTypes statType)
     {
-        HtmlNode? statisticNode = _statisticsContainerNode!.SelectSingleNode($"./dd[@class='{name.ToString().ToLowerInvariant()}']");
-        string? intString = name switch
+        HtmlNode? statisticNode = _statisticsContainerNode!.SelectSingleNode($"./dd[@class='{statType.ToString().ToLowerInvariant()}']");
+        string? intString = statType switch
         {
             StatTypes.Hits or
             StatTypes.Words => statisticNode is not null ? statisticNode.InnerText : null,
