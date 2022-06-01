@@ -61,7 +61,7 @@ public class StatModel
     /// <returns>A new <see cref="StatModel"/> filled with values from the string.</returns>
     public static StatModel FromString(string s)
     {
-        var components = s.Split(',');
+        string[] components = s.Split(',');
 
         return new StatModel()
         {
