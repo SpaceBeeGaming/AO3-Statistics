@@ -7,7 +7,7 @@ namespace AO3Statistics;
 /// <summary>
 /// Provides Methods to extract statistic data from AO3 HTML tree.
 /// </summary>
-public class Navigator
+public sealed class Navigator
 {
     private readonly HtmlNode? _statisticsContainerNode;
 
