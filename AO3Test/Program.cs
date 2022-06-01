@@ -44,12 +44,12 @@ internal static class Program
         Navigator? navigator = null;
         try
         {
-            navigator = new(uri, Navigator.PathMultiChapter);
+            navigator = new(uri, Navigator.XPathMultiChapter);
         }
         catch (NavigatorException ex)
         {
             Console.WriteLine(ex.Message);
-            Console.WriteLine($"Path used: \"{ex.Path}\"");
+            Console.WriteLine($"XPath used: \"{ex.XPath}\"");
             
             if (ex.IsRecoverable is null or false)
             {
@@ -65,12 +65,12 @@ internal static class Program
         {
             try
             {
-                navigator = new(uri, Navigator.PathSingleChapter);
+                navigator = new(uri, Navigator.XPathSingleChapter);
             }
             catch (NavigatorException ex)
             {
                 Console.WriteLine(ex.Message);
-                Console.WriteLine($"Path used: \"{ex.Path}\"");
+                Console.WriteLine($"XPath used: \"{ex.XPath}\"");
 #if DEBUG
                 throw;
 #else

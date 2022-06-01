@@ -17,7 +17,7 @@ public sealed class Navigator
     /// <remarks>
     /// Verified working on 1.6.2022
     /// </remarks>
-    public const string PathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    public const string XPathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
     /// HTML XPath for the statistics of a single-chapter fic on AO3.
@@ -25,32 +25,32 @@ public sealed class Navigator
     /// <remarks>
     /// Verified working on 1.6.2022
     /// </remarks>
-    public const string PathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
+    public const string XPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
     /// <summary>
     /// Initializes a new instance of the <see cref="Navigator"/> class and extracts the statistics element from the HTML tree.
     /// </summary>
     /// <param name="uri">The web address to fetch statistics from.</param>
-    /// <param name="path">
+    /// <param name="xPath">
     /// The XPath pointing to the statistics element.<br/>
-    /// See <see cref="PathMultiChapter"/> and <see cref="PathSingleChapter"/>
+    /// See <see cref="XPathMultiChapter"/> and <see cref="XPathSingleChapter"/>
     /// </param>
     /// <exception cref="NavigatorException"></exception>
-    public Navigator(Uri uri, string? path)
+    public Navigator(Uri uri, string? xPath)
     {
-        _statisticsContainerNode = NavigateToNode(new HtmlWeb().Load(uri, "GET"), path);
+        _statisticsContainerNode = NavigateToNode(new HtmlWeb().Load(uri, "GET"), xPath);
 
         if (_statisticsContainerNode is null)
         {
-            throw new NavigatorException("Failed to navigate Node tree. (AO3 could have changed page format.)", path, true);
+            throw new NavigatorException("Failed to navigate Node tree. (AO3 could have changed page format.)", xPath, true);
         }
     }
 
-    private static HtmlNode? NavigateToNode(HtmlDocument document, string? path)
+    private static HtmlNode? NavigateToNode(HtmlDocument document, string? xPath)
     {
         try
         {
-            return document.DocumentNode.SelectSingleNode(path);
+            return document.DocumentNode.SelectSingleNode(xPath);
         }
         catch (XPathException ex)
         {
