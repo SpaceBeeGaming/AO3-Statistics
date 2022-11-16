@@ -9,6 +9,7 @@
 		<StartupObject></StartupObject>
 		<ProduceReferenceAssembly>False</ProduceReferenceAssembly>
 		<PublishSingleFile>true</PublishSingleFile>
+		<AnalysisLevel>latest-recommended</AnalysisLevel>
 	</PropertyGroup>
 
 	<ItemGroup>
