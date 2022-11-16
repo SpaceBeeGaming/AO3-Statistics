@@ -79,6 +79,8 @@ public class StatModel
             throw new StatModelException(elements, $"String contained more than ({propCount}). Likely malformed CSV.");
         }
 
+        try
+        {
         return new StatModel()
         {
             Date = DateTime.ParseExact(elements[0], "O", null),
@@ -87,5 +89,10 @@ public class StatModel
             Words = int.Parse(elements[3]),
             Chapters = int.Parse(elements[4]),
         };
+    }
+        catch (FormatException ex)
+        {
+            throw new StatModelException(elements, "Error parsing one of the CSV values.", ex);
+        }
     }
 }

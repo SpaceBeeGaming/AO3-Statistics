@@ -28,8 +28,19 @@ public sealed class StatModelException : Exception
     /// <param name="message">The message that describes the error.</param>
     /// <param name="innerException">The <see cref="Exception"/> that is the cause of the current exception, 
     /// or a <see langword="null"/> reference if no inner exception is specified.</param>
-    public StatModelException(string? message, Exception? innerException) : base(message, innerException)
+    public StatModelException(string? message, Exception? innerException) : base(message, innerException) { }
+
+    /// <summary>
+    /// Initializes a new instance of the <see cref="StatModelException"/> class with a specified error
+    /// message, the <paramref name="elements"/> that caused this exception and a reference to the inner exception that is the cause of this exception.
+    /// </summary>
+    /// <param name="elements">The elements that resulted in this exception.</param>
+    /// <param name="message">The message that describes the error.</param>
+    /// <param name="innerException">The <see cref="Exception"/> that is the cause of the current exception, 
+    /// or a <see langword="null"/> reference if no inner exception is specified.</param>
+    public StatModelException(string[]? elements, string? message, Exception? innerException) : this(message, innerException)
     {
+        Elements = elements;
     }
 
     /// <summary>
