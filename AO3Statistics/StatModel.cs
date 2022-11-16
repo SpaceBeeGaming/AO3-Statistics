@@ -8,27 +8,27 @@ public class StatModel
     /// <summary>
     /// Date and time of sampling.
     /// </summary>
-    public DateTime Date { get; set; }
+    public required DateTime Date { get; init; }
 
     /// <summary>
     /// Number of hits on the fic.
     /// </summary>
-    public int Hits { get; set; }
+    public required int Hits { get; init; }
 
     /// <summary>
     /// Number of kudos on the fic.
     /// </summary>
-    public int Kudos { get; set; }
+    public required int Kudos { get; init; }
 
     /// <summary>
     /// Word count of published chapters.
     /// </summary>
-    public int Words { get; set; }
+    public required int Words { get; init; }
 
     /// <summary>
     /// Number of published chapters.
     /// </summary>
-    public int Chapters { get; set; }
+    public required int Chapters { get; init; }
 
     /// <summary>
     /// Serializes the instance to a CSV format string./>
