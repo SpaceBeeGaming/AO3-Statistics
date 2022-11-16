@@ -50,7 +50,7 @@ internal static class Program
         {
             Console.WriteLine(ex.Message);
             Console.WriteLine($"XPath used: \"{ex.XPath}\"");
-            
+
             if (ex.IsRecoverable is null or false)
             {
 #if DEBUG
@@ -84,7 +84,7 @@ internal static class Program
         var words = navigator.GetValue(StatTypes.Words);
         var chapters = navigator.GetValue(StatTypes.Chapters);
 
-        if (hits.IsSuccess & kudos.IsSuccess & words.IsSuccess & chapters.IsSuccess)
+        if (hits.IsSuccess && kudos.IsSuccess && words.IsSuccess && chapters.IsSuccess)
         {
             StatModel stats = new()
             {
