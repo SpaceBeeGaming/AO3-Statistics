@@ -15,7 +15,7 @@ public sealed class Navigator
     /// HTML XPath for the statistics of a multi-chapter fic on AO3.
     /// </summary>
     /// <remarks>
-    /// Verified working on 1.6.2022
+    /// Verified working on 16.11.2022
     /// </remarks>
     public const string XPathMultiChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='chapters-show region']/div[@class='work']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
@@ -23,7 +23,7 @@ public sealed class Navigator
     /// HTML XPath for the statistics of a single-chapter fic on AO3.
     /// </summary>
     /// <remarks>
-    /// Verified working on 1.6.2022
+    /// Verified working on 16.11.2022
     /// </remarks>
     public const string XPathSingleChapter = "//body/div[@class='wrapper']/div[@class='wrapper']/div[@class='works-show region']/div[@class='wrapper']/dl/dd[@class='stats']/dl";
 
