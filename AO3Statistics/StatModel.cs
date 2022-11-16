@@ -81,15 +81,15 @@ public class StatModel
 
         try
         {
-        return new StatModel()
-        {
-            Date = DateTime.ParseExact(elements[0], "O", null),
-            Hits = int.Parse(elements[1]),
-            Kudos = int.Parse(elements[2]),
-            Words = int.Parse(elements[3]),
-            Chapters = int.Parse(elements[4]),
-        };
-    }
+            return new StatModel()
+            {
+                Date = DateTime.ParseExact(elements[0], "O", null),
+                Hits = int.Parse(elements[1]),
+                Kudos = int.Parse(elements[2]),
+                Words = int.Parse(elements[3]),
+                Chapters = int.Parse(elements[4]),
+            };
+        }
         catch (FormatException ex)
         {
             throw new StatModelException(elements, "Error parsing one of the CSV values.", ex);
