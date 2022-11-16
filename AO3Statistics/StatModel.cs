@@ -45,16 +45,24 @@ public class StatModel
     /// A string formatted like:<br/>
     /// <example>
     /// <code>
-    /// Date: <see cref="Date"/><br/>
-    /// Hits: <see cref="Hits"/><br/>
-    /// Kudos: <see cref="Kudos"/><br/>
-    /// Words: <see cref="Words"/><br/>
+    /// Date:     <see cref="Date"/><br/>
+    /// Hits:     <see cref="Hits"/><br/>
+    /// Kudos:    <see cref="Kudos"/><br/>
+    /// Words:    <see cref="Words"/><br/>
     /// Chapters: <see cref="Chapters"/>
     /// </code>
     /// </example>
     /// </returns>
-    public string ToString(bool _) =>
-        $"Date: {Date}\nHits: {Hits}\nKudos: {Kudos}\nWords: {Words}\nChapters: {Chapters}";
+    public string ToString(bool _)
+    {
+        return $"""
+                Date:     {Date}
+                Hits:     {Hits}
+                Kudos:    {Kudos}
+                Words:    {Words}
+                Chapters: {Chapters}
+                """;
+    }
 
     /// <summary>
     /// Deserializes a CSV formatted string into a <see cref="StatModel"/>.
