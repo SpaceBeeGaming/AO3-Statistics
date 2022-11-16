@@ -63,15 +63,21 @@ public class StatModel
     /// <returns>A new <see cref="StatModel"/> filled with values from the string.</returns>
     public static StatModel FromString(string s)
     {
-        string[] components = s.Split(',');
+        int propCount = typeof(StatModel).GetProperties().Length;
+
+        string[] elements = s.Split(',');
+        if (elements.Length != propCount)
+        {
+            throw new StatModelException(elements, $"String contained more than ({propCount}). Likely malformed CSV.");
+        }
 
         return new StatModel()
         {
-            Date = DateTime.ParseExact(components[0], "O", null),
-            Hits = int.Parse(components[1]),
-            Kudos = int.Parse(components[2]),
-            Words = int.Parse(components[3]),
-            Chapters = int.Parse(components[4]),
+            Date = DateTime.ParseExact(elements[0], "O", null),
+            Hits = int.Parse(elements[1]),
+            Kudos = int.Parse(elements[2]),
+            Words = int.Parse(elements[3]),
+            Chapters = int.Parse(elements[4]),
         };
     }
 }
