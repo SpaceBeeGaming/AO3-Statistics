@@ -87,6 +87,6 @@ public sealed class Navigator
             _ => throw new NotImplementedException(),
         };
 
-        return (Int32.TryParse(intString, out int result), result);
+        return (Int32.TryParse(intString, System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out int result), result);
     }
 }
