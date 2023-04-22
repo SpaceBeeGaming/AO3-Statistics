@@ -1,6 +1,4 @@
-﻿using System.Runtime.Serialization;
-
-namespace AO3Statistics;
+﻿namespace AO3Statistics;
 
 /// <summary>
 /// Exception type used by <see cref="Navigator"/>. This class cannot be inherited.
@@ -48,7 +46,7 @@ public sealed class NavigatorException : Exception
     }
 
     /// <summary>
-    /// Initializes a new instance of the <see cref="NavigatorException"/> class with a specified error <paramref name="message"/> and the XPath string which caused this exception. Adiitionally specifies if the exception is critical or not.
+    /// Initializes a new instance of the <see cref="NavigatorException"/> class with a specified error <paramref name="message"/> and the XPath string which caused this exception. Additionally specifies if the exception is critical or not.
     /// </summary>
     /// <param name="message">The message that describes the error.</param>
     /// <param name="xPath">The XPath string which caused this exception.</param>
