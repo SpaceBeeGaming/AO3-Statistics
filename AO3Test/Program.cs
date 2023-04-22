@@ -83,10 +83,17 @@ internal static class Program
         var kudos = navigator.GetValue(StatTypes.Kudos);
         var words = navigator.GetValue(StatTypes.Words);
         var chapters = navigator.GetValue(StatTypes.Chapters);
-
-        if (hits.IsSuccess && kudos.IsSuccess && words.IsSuccess && chapters.IsSuccess)
+        Dictionary<StatTypes, (bool IsSuccess, int value)> stats = new()
         {
-            StatModel stats = new()
+            { StatTypes.Hits, hits },
+            { StatTypes.Kudos, kudos },
+            { StatTypes.Words, words },
+            { StatTypes.Chapters, chapters }
+        };
+
+        if (stats.All(x => x.Value.IsSuccess))
+        {
+            StatModel statModel = new()
             {
                 Hits = hits.value,
                 Kudos = kudos.value,
@@ -95,13 +102,16 @@ internal static class Program
                 Date = DateTime.Now
             };
 
-            Console.WriteLine(stats.ToString(true));
-            SaveStatsToFile(stats, filepath);
+            Console.WriteLine(statModel.ToString(true));
+            SaveStatsToFile(statModel, filepath);
             return 0;
         }
         else
         {
-            Console.WriteLine("Error Parsing Data.");
+            foreach (var stat in stats.Where(x => x.Value.IsSuccess is not true))
+            {
+                Console.WriteLine($"Error Parsing Data: {stat.Key}");
+            }
             return 1;
         }
     }
