@@ -1,4 +1,6 @@
-﻿namespace AO3Statistics;
+﻿using System.Globalization;
+
+namespace AO3Statistics;
 
 /// <summary>
 /// Data class representing work statistics.
@@ -84,10 +86,10 @@ public class StatModel
             return new StatModel()
             {
                 Date = DateTime.ParseExact(elements[0], "O", null),
-                Hits = int.Parse(elements[1]),
-                Kudos = int.Parse(elements[2]),
-                Words = int.Parse(elements[3]),
-                Chapters = int.Parse(elements[4]),
+                Hits = int.Parse(elements[1], CultureInfo.InvariantCulture),
+                Kudos = int.Parse(elements[2], CultureInfo.InvariantCulture),
+                Words = int.Parse(elements[3], CultureInfo.InvariantCulture),
+                Chapters = int.Parse(elements[4], CultureInfo.InvariantCulture),
             };
         }
         catch (FormatException ex)
