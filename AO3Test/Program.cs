@@ -18,9 +18,9 @@ internal static class Program
             return 1;
         }
 
-        var filepath = args[1];
+        string filePath = args[1];
 
-        if ((args.Length is not 3 || args[2] is not "-m") && IsCurrent(filepath))
+        if ((args.Length is not 3 || args[2] is not "-m") && IsCurrent(filePath))
         {
             Console.WriteLine("Entry already exists for this date, skipping...");
             Console.WriteLine("Add '-m' as a third argument to ignore this check.");
@@ -103,7 +103,7 @@ internal static class Program
             };
 
             Console.WriteLine(statModel.ToString(true));
-            SaveStatsToFile(statModel, filepath);
+            SaveStatsToFile(statModel, filePath);
             return 0;
         }
         else
