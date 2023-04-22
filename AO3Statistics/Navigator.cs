@@ -1,3 +1,4 @@
+﻿using System.Globalization;
 ﻿using System.Xml.XPath;
 
 using HtmlAgilityPack;
@@ -87,6 +88,6 @@ public sealed class Navigator
             _ => throw new NotImplementedException(),
         };
 
-        return (Int32.TryParse(intString, System.Globalization.NumberStyles.AllowThousands, System.Globalization.CultureInfo.InvariantCulture, out int result), result);
+        return (Int32.TryParse(intString, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int result), result);
     }
 }
