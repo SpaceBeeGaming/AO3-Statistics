@@ -58,7 +58,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
     /// Gets the authenticity token from the login from.
     /// </summary>
     /// <returns>The authenticity token.</returns>
-    /// <exception cref="NavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref="HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
     public string GetLoginFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.LoginFormAuthenticityTokenXPath);
 
@@ -66,7 +66,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
     /// Gets the authenticity token from the logout from.
     /// </summary>
     /// <returns>The authenticity token.</returns>
-    /// <exception cref=" NavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref=" HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
 
     public string GetLogoutFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.LogoutFormAuthenticityTokenXPath);
@@ -243,7 +243,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
         foreach (HtmlNode child in workStatisticsNode.ChildNodes.Where(x => x.Name is "li"))
         {
             HtmlNode node = child.SelectSingleNode("./dl", true)
-                 ?? throw new NavigatorException("Specified node wasn't found in the document.", $"{child.XPath}./dl", _document);
+                 ?? throw new HtmlNavigatorException("Specified node wasn't found in the document.", $"{child.XPath}./dl", _document);
 
             workNodes.Add(node);
         }
@@ -258,7 +258,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
     /// </summary>
     /// <param name="authenticityTokenXPath">The Xpath where the authenticity token can be found.</param>
     /// <returns>The authenticity token</returns>
-    /// <exception cref="NavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref="HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
     private string GetAuthenticityToken(string authenticityTokenXPath)
     {
@@ -266,12 +266,12 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
 
         HtmlNode node = SelectSingleNodeFromRoot(_document, authenticityTokenXPath);
         string nameAttribute = node.GetAttributeValue("name", null)
-            ?? throw new NavigatorException("Node doesn't contain attribute: 'name'", node);
+            ?? throw new HtmlNavigatorException("Node doesn't contain attribute: 'name'", node);
         return nameAttribute switch
         {
             "authenticity_token" => node.GetAttributeValue("value", null)
-                ?? throw new NavigatorException("Node doesn't contain attribute: 'value'", node),
-            _ => throw new NavigatorException($"Unexpected value for attribute: 'name' ({nameAttribute})", node)
+                ?? throw new HtmlNavigatorException("Node doesn't contain attribute: 'value'", node),
+            _ => throw new HtmlNavigatorException($"Unexpected value for attribute: 'name' ({nameAttribute})", node)
         };
     }
 
@@ -288,12 +288,12 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
     /// </summary>
     /// <param name="document">The <see cref="HtmlDocument"/> to search from.</param>
     /// <param name="xPath">The XPath to search.</param>
-    /// <returns>The <see cref="HtmlNode"/> if found, otherwise throws a <see cref="NavigatorException"/>.</returns>
-    /// <exception cref="NavigatorException">Thrown if the <paramref name="document"/>doesn't contain the specified node.</exception>
+    /// <returns>The <see cref="HtmlNode"/> if found, otherwise throws a <see cref="HtmlNavigatorException"/>.</returns>
+    /// <exception cref="HtmlNavigatorException">Thrown if the <paramref name="document"/>doesn't contain the specified node.</exception>
     private static HtmlNode SelectSingleNodeFromRoot(HtmlDocument document, string xPath)
     {
         return document.DocumentNode.SelectSingleNode(xPath)
-            ?? throw new NavigatorException("Specified node wasn't found in the document.", xPath, document);
+            ?? throw new HtmlNavigatorException("Specified node wasn't found in the document.", xPath, document);
     }
 
     /// <summary>
