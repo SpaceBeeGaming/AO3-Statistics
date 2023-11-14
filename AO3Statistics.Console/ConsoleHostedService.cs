@@ -4,15 +4,16 @@ using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Logging;
 
 namespace AO3Statistics.ConsoleApp;
-internal class ConsoleHostedService(ILogger<ConsoleHostedService> logger,
+internal class ConsoleHostedService(
     IHostApplicationLifetime applicationLifetime,
+    ILogger<ConsoleHostedService> logger,
     AO3Api aO3Api)
     : IHostedService
 {
-    private int? _exitCode;
-    private readonly ILogger<ConsoleHostedService> logger = logger;
     private readonly IHostApplicationLifetime applicationLifetime = applicationLifetime;
+    private readonly ILogger<ConsoleHostedService> logger = logger;
     private readonly AO3Api aO3Api = aO3Api;
+    private int? _exitCode;
 
     public Task StartAsync(CancellationToken cancellationToken)
     {

@@ -2,22 +2,22 @@
 
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ExtensionMethods;
-
+using AO3Statistics.ConsoleApp.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AO3Statistics.ConsoleApp;
-public class LoginManager(HtmlNavigator htmlNavigator,
-    IOptions<UserOptions> userOptions,
+public class LoginManager(ILogger<LoginManager> logger,
     IOptions<UrlOptions> urlOptions,
-    ILogger<LoginManager> logger,
+    IOptions<UserOptions> userOptions,
+    HtmlNavigator htmlNavigator,
     HttpClient httpClient)
 {
-    private readonly HtmlNavigator htmlNavigator = htmlNavigator;
-    private readonly UserOptions userOptions = userOptions.Value;
-    private readonly UrlOptions urlOptions = urlOptions.Value;
     private readonly ILogger<LoginManager> logger = logger;
+    private readonly HtmlNavigator htmlNavigator = htmlNavigator;
     private readonly HttpClient httpClient = httpClient;
+    private readonly UrlOptions urlOptions = urlOptions.Value;
+    private readonly UserOptions userOptions = userOptions.Value;
 
     /// <summary>
     /// Log in to AO3.

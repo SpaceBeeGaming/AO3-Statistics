@@ -6,15 +6,16 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AO3Statistics.ConsoleApp;
-public class AO3Api(HttpClient httpClient,
+public class AO3Api(
     ILogger<AO3Api> logger,
     IOptions<UrlOptions> urlOptions,
     HtmlNavigator htmlNavigator,
+    HttpClient httpClient,
     LoginManager loginManager)
 {
-    private readonly HttpClient httpClient = httpClient;
     private readonly ILogger<AO3Api> logger = logger;
     private readonly HtmlNavigator htmlNavigator = htmlNavigator;
+    private readonly HttpClient httpClient = httpClient;
     private readonly LoginManager loginManager = loginManager;
     private readonly UrlOptions urlOptions = urlOptions.Value;
 
