@@ -2,7 +2,7 @@
 using System.Net.Http.Headers;
 
 using AO3Statistics.ConsoleApp;
-
+using AO3Statistics.ConsoleApp.Models;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;

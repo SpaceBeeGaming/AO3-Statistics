@@ -1,4 +1,4 @@
-﻿namespace AO3Statistics.ConsoleApp;
+﻿namespace AO3Statistics.ConsoleApp.Models;
 
 public sealed class UrlOptions
 {
