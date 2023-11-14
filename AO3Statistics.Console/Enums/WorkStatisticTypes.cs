@@ -7,6 +7,7 @@ namespace AO3Statistics.ConsoleApp.Enums;
 /// </summary>
 public enum WorkStatisticTypes
 {
+    WorkId,
     WorkName,
     FandomName,
     WordCount,

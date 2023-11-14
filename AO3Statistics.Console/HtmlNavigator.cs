@@ -17,9 +17,13 @@ namespace AO3Statistics.ConsoleApp;
 /// <summary>
 /// Provides methods to extract data from <see cref="HtmlDocument"/>.
 /// </summary>
-public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<HtmlNavigator> logger)
+public sealed class HtmlNavigator(
+    IOptions<XPathOptions> xPathOptions,
+    IOptions<UserOptions> userOptions,
+    ILogger<HtmlNavigator> logger)
 {
     private readonly XPathOptions xPathOptions = xPathOptions.Value;
+    private readonly UserOptions userOptions = userOptions.Value;
     private readonly ILogger<HtmlNavigator> logger = logger;
     private HtmlDocument? _document;
 
@@ -103,6 +107,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
 
         UserStatisticsModel userStatisticsModel = new()
         {
+            Username = userOptions.Username,
             UserSubscriptions = userSubscriptions.value,
             Kudos = kudos.value,
             CommentThreads = commentThreads.value,
@@ -129,6 +134,11 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
         foreach (HtmlNode statisticNode in workNodes)
         {
             Dictionary<WorkStatisticTypes, bool> workStatisticsDict = [];
+
+            // Work ID
+            string? workId = GetWorkStatisticValue(statisticNode, WorkStatisticTypes.WorkId);
+            logger.LogDebug("Work ID: {WorkId}", workId);
+            workStatisticsDict.Add(WorkStatisticTypes.WorkId, workId.IsNotNullOrWhitespace());
 
             // Work name
             string? workName = GetWorkStatisticValue(statisticNode, WorkStatisticTypes.WorkName);
@@ -179,6 +189,7 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
 
             workStatistics.Add(new()
             {
+                WorkId = workId!,
                 WorkName = workName!,
                 FandomName = fandomName!,
                 WordCount = wordCount,
@@ -214,6 +225,8 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
     {
         switch (statisticType)
         {
+            case WorkStatisticTypes.WorkId:
+                return workNode.SelectSingleNode("./dt/a", true)?.GetAttributeValue("href", null)[7..];
             case WorkStatisticTypes.WorkName:
                 return WebUtility.HtmlDecode(workNode.SelectSingleNode("./dt/a", true)?.InnerText);
             case WorkStatisticTypes.FandomName:
