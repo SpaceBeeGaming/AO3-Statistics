@@ -13,10 +13,6 @@
 	</PropertyGroup>
 
 	<ItemGroup>
-	  <None Include="..\.editorconfig" Link=".editorconfig" />
-	</ItemGroup>
-
-	<ItemGroup>
 	  <ProjectReference Include="..\AO3Statistics\AO3Statistics.csproj" />
 	</ItemGroup>
 
