@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace StringExtensions;
+namespace AO3Statistics.ConsoleApp.ExtensionMethods;
 
 public static class StringExtensions
 {

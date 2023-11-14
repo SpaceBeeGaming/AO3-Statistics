@@ -1,11 +1,10 @@
 ﻿using System.Net;
 
 using AO3Statistics.ConsoleApp.Enums;
+using AO3Statistics.ConsoleApp.ExtensionMethods;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
-using StringExtensions;
 
 namespace AO3Statistics.ConsoleApp;
 public class LoginManager(HtmlNavigator htmlNavigator,

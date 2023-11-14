@@ -3,14 +3,13 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 
 using AO3Statistics.ConsoleApp.Enums;
+using AO3Statistics.ConsoleApp.ExtensionMethods;
 using AO3Statistics.ConsoleApp.Models;
 
 using HtmlAgilityPack;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
-
-using StringExtensions;
 
 namespace AO3Statistics.ConsoleApp;
 

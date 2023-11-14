@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics.ConsoleApp.ExtensionMethods;
 
 public static class HtmlNodeExtensions
 {
