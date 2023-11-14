@@ -10,7 +10,7 @@ public sealed class StatisticsSnapshotModel
     /// <summary>
     /// Date of creation.
     /// </summary>
-    public DateOnly Date { get; set; }
+    public DateOnly Date { get; init; }
     /// <summary>
     /// A list containing the statistics for users works.
     /// </summary>
