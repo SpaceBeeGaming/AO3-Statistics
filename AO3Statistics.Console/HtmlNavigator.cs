@@ -1,6 +1,7 @@
 ﻿using System.Diagnostics;
 using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
+using System.Net;
 
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ExtensionMethods;
@@ -214,9 +215,9 @@ public sealed class HtmlNavigator(IOptions<XPathOptions> xPathOptions, ILogger<H
         switch (statisticType)
         {
             case WorkStatisticTypes.WorkName:
-                return System.Net.WebUtility.HtmlDecode(workNode.SelectSingleNode("./dt/a", true)?.InnerText);
+                return WebUtility.HtmlDecode(workNode.SelectSingleNode("./dt/a", true)?.InnerText);
             case WorkStatisticTypes.FandomName:
-                return System.Net.WebUtility.HtmlDecode(workNode.SelectSingleNode($"./dt/span[@class='{statisticType.ToString(true)}']", true)?.InnerText[1..^1]);
+                return WebUtility.HtmlDecode(workNode.SelectSingleNode($"./dt/span[@class='{statisticType.ToString(true)}']", true)?.InnerText[1..^1]);
             case WorkStatisticTypes.WordCount:
                 return workNode.SelectSingleNode($"./dt/span[@class='{statisticType.ToString(true)}']", true)?.InnerText[1..^7];
             case WorkStatisticTypes.Subscriptions:
