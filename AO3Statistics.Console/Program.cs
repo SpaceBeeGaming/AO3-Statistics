@@ -3,6 +3,7 @@ using System.Net.Http.Headers;
 
 using AO3Statistics.ConsoleApp;
 using AO3Statistics.ConsoleApp.Models;
+
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -23,6 +24,7 @@ await Host.CreateDefaultBuilder(args)
     .ConfigureServices((context, services) =>
     {
         services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(nameof(UserOptions)));
+        services.AddOptions<OutputOptions>().Bind(context.Configuration.GetSection(nameof(OutputOptions)));
         services.AddOptions<XPathOptions>().Bind(context.Configuration.GetSection(nameof(XPathOptions)));
         services.AddOptions<UrlOptions>().Bind(context.Configuration.GetSection(nameof(UrlOptions)))
             .PostConfigure<IOptions<UserOptions>>((options, userOptions) =>
