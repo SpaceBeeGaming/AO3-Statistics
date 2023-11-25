@@ -36,6 +36,7 @@ public static class WorkStatisticTypesMethods
     {
         return type switch
         {
+            WorkStatisticTypes.WorkId => throw new NotImplementedException(),
             WorkStatisticTypes.WorkName => throw new NotImplementedException(),
             WorkStatisticTypes.FandomName => "fandom",
             WorkStatisticTypes.WordCount => "words",
