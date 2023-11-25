@@ -14,6 +14,7 @@ public sealed class WorkStatisticsModel
     public string ToString(bool _)
     {
         return $"""
+        Work ID:            {WorkId}
         Work name:          {WorkName}
         Fandom:             {FandomName}
         Word count:         {WordCount}
