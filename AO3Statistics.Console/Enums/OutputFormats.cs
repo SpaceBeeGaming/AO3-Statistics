@@ -1,5 +1,6 @@
 ﻿namespace AO3Statistics.ConsoleApp.Enums;
-public enum OutputTypes
+public enum OutputFormats
 {
-    CSV
+    CSV,
+    JSON
 }

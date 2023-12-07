@@ -4,7 +4,7 @@ namespace AO3Statistics.ConsoleApp.Models;
 
 public sealed class OutputOptions
 {
-    public required OutputTypes OutputTypes { get; init; }
+    public required OutputFormats OutputFormat { get; init; }
 
     public required string FolderPath { get; init; }
 }
