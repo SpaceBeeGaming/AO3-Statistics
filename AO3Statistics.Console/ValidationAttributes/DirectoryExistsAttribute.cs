@@ -11,7 +11,7 @@ public sealed class DirectoryExistsAttribute : ValidationAttribute
         return value is string path
             ? Directory.Exists(path)
                 ? ValidationResult.Success
-                : new ValidationResult($"Path: '{path}' doesn't exist", memberNameList)
+                : new ValidationResult($"Path: '{Path.GetFullPath(path)}' doesn't exist", memberNameList)
             : new ValidationResult($"{validationContext.DisplayName} is not of type {typeof(string)}.", memberNameList);
     }
 }
