@@ -23,8 +23,20 @@ httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue(
 
 HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
+builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
+{
+    [$"{nameof(UserOptions)}:{nameof(UserOptions.PasswordIsFromCommandLine)}"] = args.Contains("--UserOptions:Password") ? bool.TrueString : bool.FalseString,
+});
+
 builder.Services.AddOptionsWithValidateOnStart<UserOptions>()
     .Bind(builder.Configuration.GetSection(nameof(UserOptions)))
+    .PostConfigure((options) =>
+    {
+        if (options.PasswordIsProtected is true && options.PasswordIsFromCommandLine is false)
+        {
+            options.Password = PasswordEncryptor.UnProtectPassword(options.Password);
+        }
+    })
     .ValidateDataAnnotations();
 
 builder.Services.AddOptionsWithValidateOnStart<OutputOptions>()

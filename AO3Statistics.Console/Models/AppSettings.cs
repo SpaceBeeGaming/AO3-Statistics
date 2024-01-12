@@ -36,11 +36,13 @@ public sealed class UserOptions
     [Required]
     public required string Username { get; init; }
 
-    [Required]
-    public required string Password { get; init; }
+    public required string Password { get; set; }
 
     [Required]
-    public required bool IsProtected { get; init; }
+    public required bool PasswordIsProtected { get; init; }
+
+    [Required]
+    public required bool PasswordIsFromCommandLine { get; init; }
 }
 
 public sealed class XPathOptions
