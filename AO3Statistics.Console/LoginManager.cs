@@ -16,8 +16,8 @@ public class LoginManager(ILogger<LoginManager> logger,
     private readonly ILogger<LoginManager> logger = logger;
     private readonly HtmlNavigator htmlNavigator = htmlNavigator;
     private readonly HttpClient httpClient = httpClient;
-    private readonly UrlOptions urlOptions = urlOptions.Value;
-    private readonly UserOptions userOptions = userOptions.Value;
+    private readonly IOptions<UrlOptions> urlOptions = urlOptions;
+    private readonly IOptions<UserOptions> userOptions = userOptions;
 
     /// <summary>
     /// Log in to AO3.
@@ -27,14 +27,14 @@ public class LoginManager(ILogger<LoginManager> logger,
     public async Task<bool> LoginAsync()
     {
         // Check that we have a username and a password.
-        if (userOptions.Username.IsNullOrWhitespace() || userOptions.Password.IsNullOrWhitespace())
+        if (userOptions.Value.Username.IsNullOrWhitespace() || userOptions.Value.Password.IsNullOrWhitespace())
         {
             logger.LogError("Username or password is missing.");
             return false;
         }
 
         // HTTP GET the login page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.LoginUrl);
+        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LoginUrl);
         if (getResponse.StatusCode is HttpStatusCode.Moved)
         {
             getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
@@ -60,12 +60,12 @@ public class LoginManager(ILogger<LoginManager> logger,
         Dictionary<string, string> content = new()
         {
             { "authenticity_token", htmlNavigator.GetLoginFormAuthenticityToken() },
-            { "user[login]", userOptions.Username },
-            { "user[password]", userOptions.Password }
+            { "user[login]", userOptions.Value.Username },
+            { "user[password]", userOptions.Value.Password }
         };
 
         // HTTP POST the credentials.
-        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.LoginUrl, new FormUrlEncodedContent(content));
+        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LoginUrl, new FormUrlEncodedContent(content));
         if (postResponse.StatusCode is HttpStatusCode.Moved)
         {
             postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
@@ -86,7 +86,7 @@ public class LoginManager(ILogger<LoginManager> logger,
         htmlNavigator.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
         if (htmlNavigator.GetLoggedInStatus() is LoggedInStatus.LoggedId)
         {
-            logger.LogInformation("Successfully logged in as {Username}", userOptions.Username);
+            logger.LogInformation("Successfully logged in as {Username}", userOptions.Value.Username);
             return true;
         }
         else
@@ -104,7 +104,7 @@ public class LoginManager(ILogger<LoginManager> logger,
     public async Task LogoutAsync()
     {
         // HTTP GET the logout page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.LogOutUrl);
+        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LogOutUrl);
         if (getResponse.StatusCode is HttpStatusCode.Moved)
         {
             getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
@@ -131,7 +131,7 @@ public class LoginManager(ILogger<LoginManager> logger,
             { "_method", "delete" }
         };
 
-        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.LogOutUrl, new FormUrlEncodedContent(content));
+        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LogOutUrl, new FormUrlEncodedContent(content));
         if (postResponse.StatusCode is HttpStatusCode.Moved)
         {
             postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));

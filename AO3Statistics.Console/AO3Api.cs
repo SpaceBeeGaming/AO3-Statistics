@@ -17,7 +17,7 @@ public class AO3Api(
     private readonly HtmlNavigator htmlNavigator = htmlNavigator;
     private readonly HttpClient httpClient = httpClient;
     private readonly LoginManager loginManager = loginManager;
-    private readonly UrlOptions urlOptions = urlOptions.Value;
+    private readonly IOptions<UrlOptions> urlOptions = urlOptions;
 
     /// <summary>
     /// Log in to AO3.
@@ -35,7 +35,7 @@ public class AO3Api(
     public async Task<StatisticsSnapshotModel?> GetStatisticsSnapshotAsync()
     {
         // HTTP GET the statistics page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.StatsUrl);
+        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.StatsUrl);
         if (getResponse.StatusCode is HttpStatusCode.Moved)
         {
             getResponse = await httpClient.GetAsync(getResponse.Headers.Location);

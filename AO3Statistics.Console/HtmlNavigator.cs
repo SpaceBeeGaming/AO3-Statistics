@@ -23,8 +23,8 @@ public sealed class HtmlNavigator(
     IOptions<XPathOptions> xPathOptions)
 {
     private readonly ILogger<HtmlNavigator> logger = logger;
-    private readonly UserOptions userOptions = userOptions.Value;
-    private readonly XPathOptions xPathOptions = xPathOptions.Value;
+    private readonly IOptions<UserOptions> userOptions = userOptions;
+    private readonly IOptions<XPathOptions> xPathOptions = xPathOptions;
     private HtmlDocument? _document;
 
     public bool IsDocumentLoaded => _document is not null;
@@ -64,7 +64,7 @@ public sealed class HtmlNavigator(
     /// <returns>The authenticity token.</returns>
     /// <exception cref="HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
-    public string GetLoginFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.LoginFormAuthenticityTokenXPath);
+    public string GetLoginFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.Value.LoginFormAuthenticityTokenXPath);
 
     /// <summary>
     /// Gets the authenticity token from the logout from.
@@ -73,7 +73,7 @@ public sealed class HtmlNavigator(
     /// <exception cref=" HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
 
-    public string GetLogoutFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.LogoutFormAuthenticityTokenXPath);
+    public string GetLogoutFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.Value.LogoutFormAuthenticityTokenXPath);
 
     /// <summary>
     /// Extracts the user statistics from the loaded document.
@@ -107,7 +107,7 @@ public sealed class HtmlNavigator(
 
         UserStatisticsModel userStatisticsModel = new()
         {
-            Username = userOptions.Username,
+            Username = userOptions.Value.Username,
             UserSubscriptions = userSubscriptions.value,
             Kudos = kudos.value,
             CommentThreads = commentThreads.value,
@@ -215,7 +215,7 @@ public sealed class HtmlNavigator(
     {
         ThrowIfDocumentNull(_document);
 
-        HtmlNode? statisticNode = SelectSingleNodeFromRoot(_document, xPathOptions.UserStatisticsXPath)
+        HtmlNode? statisticNode = SelectSingleNodeFromRoot(_document, xPathOptions.Value.UserStatisticsXPath)
             .SelectSingleNode($"./dd[@class='{statisticType.ToString(true)}']", true);
 
         return (Int32.TryParse(statisticNode?.InnerText, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int result), result);
@@ -250,7 +250,7 @@ public sealed class HtmlNavigator(
     {
         ThrowIfDocumentNull(_document);
 
-        HtmlNode workStatisticsNode = SelectSingleNodeFromRoot(_document, xPathOptions.WorkStatisticsXPath);
+        HtmlNode workStatisticsNode = SelectSingleNodeFromRoot(_document, xPathOptions.Value.WorkStatisticsXPath);
 
         List<HtmlNode> workNodes = [];
         foreach (HtmlNode child in workStatisticsNode.ChildNodes.Where(x => x.Name is "li"))
