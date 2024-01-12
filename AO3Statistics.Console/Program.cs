@@ -4,6 +4,7 @@ using System.Net.Http.Headers;
 using AO3Statistics.ConsoleApp;
 using AO3Statistics.ConsoleApp.Models;
 
+using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
 using Microsoft.Extensions.Options;
@@ -20,20 +21,47 @@ HttpClient httpClient = new(handler);
 httpClient.DefaultRequestHeaders.UserAgent.Add(ProductInfoHeaderValue.Parse("AO3Stats/v2"));
 httpClient.DefaultRequestHeaders.Accept.Add(new MediaTypeWithQualityHeaderValue("text/html"));
 
-await Host.CreateDefaultBuilder(args)
-    .ConfigureServices((context, services) =>
+HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
+
+builder.Services.AddOptionsWithValidateOnStart<UserOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(UserOptions)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptionsWithValidateOnStart<OutputOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(OutputOptions)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptionsWithValidateOnStart<XPathOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(XPathOptions)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddOptionsWithValidateOnStart<UrlOptions>()
+    .Bind(builder.Configuration.GetSection(nameof(UrlOptions)))
+    .PostConfigure<IOptions<UserOptions>>((options, userOptions) =>
+        options.StatsUrl = new Uri(options.StatsUrl.OriginalString.Replace("<USERNAME>", userOptions.Value.Username)))
+    .ValidateDataAnnotations();
+
+builder.Services.AddSingleton(httpClient);
+builder.Services.AddSingleton<HtmlNavigator>();
+builder.Services.AddSingleton<LoginManager>();
+builder.Services.AddSingleton<AO3Api>();
+builder.Services.AddHostedService<ConsoleHostedService>();
+
+var host = builder.Build();
+
+try
+{
+    await host.RunAsync();
+}
+catch (AggregateException ex)
+{
+    if (ex.InnerException is OptionsValidationException validationEx)
     {
-        services.AddOptions<UserOptions>().Bind(context.Configuration.GetSection(nameof(UserOptions)));
-        services.AddOptions<OutputOptions>().Bind(context.Configuration.GetSection(nameof(OutputOptions)));
-        services.AddOptions<XPathOptions>().Bind(context.Configuration.GetSection(nameof(XPathOptions)));
-        services.AddOptions<UrlOptions>().Bind(context.Configuration.GetSection(nameof(UrlOptions)))
-            .PostConfigure<IOptions<UserOptions>>((options, userOptions) =>
-                options.StatsUrl = new Uri(options.StatsUrl.OriginalString.Replace("<USERNAME>", userOptions.Value.Username)));
+        Console.WriteLine("Configuration issues:");
+        foreach (string failure in validationEx.Failures)
+        {
+            Console.WriteLine(failure);
+        }
+    }
+}
 
-        services.AddHostedService<ConsoleHostedService>();
-        services.AddSingleton(httpClient);
-        services.AddSingleton<LoginManager>();
-        services.AddSingleton<AO3Api>();
-        services.AddSingleton<HtmlNavigator>();
-
-    }).RunConsoleAsync();
