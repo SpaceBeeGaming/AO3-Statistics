@@ -35,7 +35,7 @@ public class LoginManager(ILogger<LoginManager> logger,
 
         // HTTP GET the login page.
         HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LoginUrl);
-        if (getResponse.StatusCode is HttpStatusCode.Moved)
+        while (getResponse.StatusCode is HttpStatusCode.Moved)
         {
             getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
         }
@@ -66,12 +66,12 @@ public class LoginManager(ILogger<LoginManager> logger,
 
         // HTTP POST the credentials.
         HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LoginUrl, new FormUrlEncodedContent(content));
-        if (postResponse.StatusCode is HttpStatusCode.Moved)
+        while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
         {
             postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
         }
 
-        if (postResponse.StatusCode is HttpStatusCode.Redirect)
+        while (postResponse.StatusCode is HttpStatusCode.Redirect)
         {
             postResponse = await httpClient.GetAsync(postResponse.Headers.Location);
         }
@@ -105,7 +105,7 @@ public class LoginManager(ILogger<LoginManager> logger,
     {
         // HTTP GET the logout page.
         HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LogOutUrl);
-        if (getResponse.StatusCode is HttpStatusCode.Moved)
+        while (getResponse.StatusCode is HttpStatusCode.Moved)
         {
             getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
         }
@@ -132,17 +132,12 @@ public class LoginManager(ILogger<LoginManager> logger,
         };
 
         HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LogOutUrl, new FormUrlEncodedContent(content));
-        if (postResponse.StatusCode is HttpStatusCode.Moved)
+                while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
         {
             postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
         }
 
-        if (postResponse.StatusCode is HttpStatusCode.Redirect)
-        {
-            postResponse = await httpClient.GetAsync(postResponse.Headers.Location);
-        }
-
-        if (postResponse.StatusCode is HttpStatusCode.Redirect)
+        while (postResponse.StatusCode is HttpStatusCode.Redirect)
         {
             postResponse = await httpClient.GetAsync(postResponse.Headers.Location);
         }
