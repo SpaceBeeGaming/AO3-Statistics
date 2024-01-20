@@ -1,7 +1,7 @@
 ﻿using System.Security.Cryptography;
 using System.Text;
 
-namespace AO3Statistics.ConsoleApp.Services;
+namespace AO3Statistics.ConsoleApp;
 
 internal static class PasswordEncryptor
 {

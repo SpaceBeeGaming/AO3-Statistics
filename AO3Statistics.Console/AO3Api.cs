@@ -1,11 +1,25 @@
-﻿using System.Net;
+﻿
+/* Unmerged change from project 'AO3Statistics.ConsoleApp (net8.0)'
+Before:
+using System.Net;
 
 using AO3Statistics.ConsoleApp.Models;
+After:
+using System.Net;
+using AO3Statistics;
+using AO3Statistics.ConsoleApp;
+using AO3Statistics.ConsoleApp;
+using AO3Statistics.ConsoleApp.Models;
+*/
+using System.Net;
+
+using AO3Statistics.ConsoleApp.Models;
+using AO3Statistics.ConsoleApp.Services;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp.Services;
+namespace AO3Statistics.ConsoleApp;
 public class AO3Api(
     ILogger<AO3Api> logger,
     IOptions<UrlOptions> urlOptions,
