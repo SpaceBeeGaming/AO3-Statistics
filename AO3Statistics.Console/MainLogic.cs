@@ -1,4 +1,5 @@
-﻿using AO3Statistics.ConsoleApp.Models;
+﻿using AO3Statistics.ConsoleApp.ExtensionMethods;
+using AO3Statistics.ConsoleApp.Models;
 using AO3Statistics.ConsoleApp.Services.DataDestinationService;
 
 using Microsoft.Extensions.Logging;
@@ -18,13 +19,13 @@ internal class MainLogic(
 
     public async Task<int> Run()
     {
-        if (userOptions.Value.Password is null or "")
+        if (userOptions.Value.Password is null or "" && userOptions.Value.PasswordIsFromCommandLine is false)
         {
             const string NoPasswordProvidedMessage = """
                             No password was provided.
-                            Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument.
+                            Please run the program through the command line with '--Password' as an argument.
                             """;
-            Console.WriteLine(NoPasswordProvidedMessage);
+            await Console.Out.WriteLineAsync(NoPasswordProvidedMessage);
             return 1;
         }
 
@@ -32,24 +33,35 @@ internal class MainLogic(
         {
             const string UnprotectedPasswordWarningMessage = """
                             Using Unprotected password!
-                            Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument for further instructions.
+                            Please run the program through the command line with '--Password' as an argument for further instructions.
                             """;
-            Console.WriteLine(UnprotectedPasswordWarningMessage);
+            await Console.Out.WriteLineAsync(UnprotectedPasswordWarningMessage);
         }
         else if (userOptions.Value.PasswordIsProtected is false && userOptions.Value.PasswordIsFromCommandLine is true)
         {
-            string protectedPassword = PasswordEncryptor.ProtectPassword(userOptions.Value.Password);
+            await Console.Out.WriteLineAsync("Please provide your password: ");
+            string? password = await Console.In.ReadLineAsync();
+            if (password.IsNullOrWhitespace())
+            {
+                await Console.Out.WriteLineAsync("Not a valid password.");
+                return 1;
+            }
 
-            const string ProtectedPasswordInfoMessage = """
+            userOptions.Value.Password = password;
+
+            string protectedPassword = PasswordEncryptor.ProtectPassword(password);
+
+            string ProtectedPasswordInfoMessage = $"""
                             Password provided through command line. 
                             If you're always running the program manually, you can disable this message by setting "UserOptions:PasswordIsProtected" to true in the appsettings.json file.
 
                             If you'd like the program to remember your password, please make the following changes to the appsettings.json file. 
-                            1. Paste "{0}" to "UserOptions:Password".
+                            1. Paste "{protectedPassword}" to "UserOptions:Password".
                             2. Set "UserOptions:PasswordIsProtected" to true.
+                            3. Run WITHOUT --Password
                             Important Note: On operating systems other than Windows, the password is NOT encrypted and is trivial to get back in original form.
                             """;
-            Console.WriteLine(ProtectedPasswordInfoMessage, protectedPassword);
+            await Console.Out.WriteLineAsync(ProtectedPasswordInfoMessage);
         }
 
         bool loginSucceeded = await aO3Api.LoginAsync();

@@ -28,7 +28,7 @@ HostApplicationBuilder builder = Host.CreateApplicationBuilder(args);
 
 builder.Configuration.AddInMemoryCollection(new Dictionary<string, string?>
 {
-    [$"{nameof(UserOptions)}:{nameof(UserOptions.PasswordIsFromCommandLine)}"] = args.Contains("--UserOptions:Password") ? bool.TrueString : bool.FalseString,
+    [$"{nameof(UserOptions)}:{nameof(UserOptions.PasswordIsFromCommandLine)}"] = args.Contains("--Password") ? bool.TrueString : bool.FalseString,
 });
 
 builder.Services.AddOptionsWithValidateOnStart<UserOptions>()
