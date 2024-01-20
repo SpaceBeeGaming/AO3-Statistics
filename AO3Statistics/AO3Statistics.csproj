@@ -32,5 +32,6 @@
 		<Exec Command="XCOPY &quot;$(ProjectDir)Third Party Licenses\*.*&quot; &quot;$(PublishDir)Third Party Licenses\&quot; /S /Y" />
 		<Delete Files="$(PublishDir)appsettings.Development.json" />
 		<Copy SourceFiles="$(SolutionDir)LICENSE" DestinationFiles="$(PublishDir)LICENSE.txt" />
+		<Copy SourceFiles="$(SolutionDir)AO3Statistics.cmd" DestinationFolder="$(PublishDir)" Condition="'$(TargetFramework)'=='net8.0-windows'" />
 	</Target>
 </Project>
