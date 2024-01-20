@@ -28,21 +28,21 @@ internal class ConsoleHostedService(
                 {
                     if (userOptions.Value.Password is null or "")
                     {
-                        const string NoPasswordMessage = """
+                        const string NoPasswordProvidedMessage = """
                             No password was provided.
                             Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument.
                             """;
-                        logger.LogWarning(NoPasswordMessage);
+                        logger.LogWarning(NoPasswordProvidedMessage);
                         return;
                     }
 
                     if (userOptions.Value.PasswordIsProtected is false && userOptions.Value.PasswordIsFromCommandLine is false)
                     {
-                        const string UnprotectedPasswordMessage = """
+                        const string UnprotectedPasswordWarningMessage = """
                             Using Unprotected password!
-                            Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument for further isntructions.
+                            Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument for further instructions.
                             """;
-                        logger.LogWarning(UnprotectedPasswordMessage);
+                        logger.LogWarning(UnprotectedPasswordWarningMessage);
                     }
                     else if (userOptions.Value.PasswordIsProtected is false && userOptions.Value.PasswordIsFromCommandLine is true)
                     {
