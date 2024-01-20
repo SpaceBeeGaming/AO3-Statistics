@@ -4,6 +4,7 @@ using System.Globalization;
 using System.Net;
 
 using AO3Statistics.ConsoleApp.Enums;
+using AO3Statistics.ConsoleApp.Exceptions;
 using AO3Statistics.ConsoleApp.ExtensionMethods;
 using AO3Statistics.ConsoleApp.Models;
 
@@ -12,7 +13,7 @@ using HtmlAgilityPack;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics.ConsoleApp.Services;
 
 /// <summary>
 /// Provides methods to extract data from <see cref="HtmlDocument"/>.
@@ -49,7 +50,7 @@ public sealed class HtmlNavigator(
         ThrowIfDocumentNull(_document);
 
         HtmlNode node = SelectSingleNodeFromRoot(_document, "//body");
-        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-"), String.Empty);
+        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-"), string.Empty);
         return classString switch
         {
             "logged-in" => LoggedInStatus.LoggedId,
@@ -218,7 +219,7 @@ public sealed class HtmlNavigator(
         HtmlNode? statisticNode = SelectSingleNodeFromRoot(_document, xPathOptions.Value.UserStatisticsXPath)
             .SelectSingleNode($"./dd[@class='{statisticType.ToString(true)}']", true);
 
-        return (Int32.TryParse(statisticNode?.InnerText, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int result), result);
+        return (int.TryParse(statisticNode?.InnerText, NumberStyles.AllowThousands, CultureInfo.InvariantCulture, out int result), result);
     }
 
     private static string? GetWorkStatisticValue(HtmlNode workNode, WorkStatisticTypes statisticType)

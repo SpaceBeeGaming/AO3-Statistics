@@ -1,5 +1,6 @@
 ﻿using AO3Statistics.ConsoleApp.ExtensionMethods;
 using AO3Statistics.ConsoleApp.Models;
+using AO3Statistics.ConsoleApp.Services;
 using AO3Statistics.ConsoleApp.Services.DataDestinationService;
 
 using Microsoft.Extensions.Logging;

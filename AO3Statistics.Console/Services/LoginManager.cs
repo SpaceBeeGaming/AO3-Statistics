@@ -1,12 +1,11 @@
 ﻿using System.Net;
-
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ExtensionMethods;
 using AO3Statistics.ConsoleApp.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics.ConsoleApp.Services;
 public class LoginManager(ILogger<LoginManager> logger,
     IOptions<UrlOptions> urlOptions,
     IOptions<UserOptions> userOptions,
@@ -132,7 +131,7 @@ public class LoginManager(ILogger<LoginManager> logger,
         };
 
         HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LogOutUrl, new FormUrlEncodedContent(content));
-                while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
+        while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
         {
             postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
         }

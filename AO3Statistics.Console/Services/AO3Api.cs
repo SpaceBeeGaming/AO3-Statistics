@@ -5,7 +5,7 @@ using AO3Statistics.ConsoleApp.Models;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics.ConsoleApp.Services;
 public class AO3Api(
     ILogger<AO3Api> logger,
     IOptions<UrlOptions> urlOptions,

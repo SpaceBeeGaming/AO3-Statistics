@@ -1,6 +1,6 @@
 ﻿using HtmlAgilityPack;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics.ConsoleApp.Exceptions;
 
 public sealed class HtmlNavigatorException : Exception
 {
