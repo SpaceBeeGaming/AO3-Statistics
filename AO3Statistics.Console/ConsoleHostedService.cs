@@ -32,7 +32,7 @@ internal class ConsoleHostedService(
                             No password was provided.
                             Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument.
                             """;
-                        logger.LogWarning(NoPasswordProvidedMessage);
+                        Console.WriteLine(NoPasswordProvidedMessage);
                         return;
                     }
 
@@ -42,7 +42,7 @@ internal class ConsoleHostedService(
                             Using Unprotected password!
                             Please run the program through the command line with '--UserOptions:Password "<your password here>"' as an argument for further instructions.
                             """;
-                        logger.LogWarning(UnprotectedPasswordWarningMessage);
+                        Console.WriteLine(UnprotectedPasswordWarningMessage);
                     }
                     else if (userOptions.Value.PasswordIsProtected is false && userOptions.Value.PasswordIsFromCommandLine is true)
                     {
@@ -53,17 +53,17 @@ internal class ConsoleHostedService(
                             If you're always running the program manually, you can disable this message by setting "UserOptions:PasswordIsProtected" to true in the appsettings.json file.
 
                             If you'd like the program to remember your password, please make the following changes to the appsettings.json file. 
-                            1. Paste "{protectedPassword}" to "UserOptions:Password".
+                            1. Paste "{0}" to "UserOptions:Password".
                             2. Set "UserOptions:PasswordIsProtected" to true.
                             Important Note: On operating systems other than Windows, the password is NOT encrypted and is trivial to get back in original form.
                             """;
-                        logger.LogInformation(ProtectedPasswordInfoMessage, protectedPassword);
+                        Console.WriteLine(ProtectedPasswordInfoMessage, protectedPassword);
                     }
 
                     if (await aO3Api.LoginAsync())
                     {
                         StatisticsSnapshotModel? statisticsSnapshot = await aO3Api.GetStatisticsSnapshotAsync();
-                        logger.LogInformation("{StatistiSnapshot}", statisticsSnapshot?.ToString(true));
+                        Console.WriteLine(statisticsSnapshot?.ToString(true));
                         await aO3Api.LogoutAsync();
 
                         // TODO: Write to file.
