@@ -3,17 +3,17 @@ using System.Diagnostics.CodeAnalysis;
 using System.Globalization;
 using System.Net;
 
-using AO3Statistics.ConsoleApp.Enums;
-using AO3Statistics.ConsoleApp.Exceptions;
-using AO3Statistics.ConsoleApp.ExtensionMethods;
-using AO3Statistics.ConsoleApp.Models;
+using AO3Statistics.Enums;
+using AO3Statistics.Exceptions;
+using AO3Statistics.ExtensionMethods;
+using AO3Statistics.Models;
 
 using HtmlAgilityPack;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp.Services;
+namespace AO3Statistics.Services;
 
 /// <summary>
 /// Provides methods to extract data from <see cref="HtmlDocument"/>.

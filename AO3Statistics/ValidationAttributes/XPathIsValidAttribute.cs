@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Xml.XPath;
 
-namespace AO3Statistics.ConsoleApp.ValidationAttributes;
+namespace AO3Statistics.ValidationAttributes;
 public sealed class XPathIsValidAttribute : ValidationAttribute
 {
     protected override ValidationResult? IsValid(object? value, ValidationContext validationContext)

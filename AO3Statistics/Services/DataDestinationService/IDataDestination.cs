@@ -1,6 +1,6 @@
-﻿using AO3Statistics.ConsoleApp.Models;
+﻿using AO3Statistics.Models;
 
-namespace AO3Statistics.ConsoleApp.Services.DataDestinationService;
+namespace AO3Statistics.Services.DataDestinationService;
 public interface IDataDestination
 {
     void SaveData(StatisticsSnapshotModel statisticsSnapshot);

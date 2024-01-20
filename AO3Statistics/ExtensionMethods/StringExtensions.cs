@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics.CodeAnalysis;
 
-namespace AO3Statistics.ConsoleApp.ExtensionMethods;
+namespace AO3Statistics.ExtensionMethods;
 
 /// <summary>
 /// Extension methods for strings.

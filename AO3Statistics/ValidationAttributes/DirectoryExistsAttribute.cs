@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AO3Statistics.ConsoleApp.ValidationAttributes;
+namespace AO3Statistics.ValidationAttributes;
 [AttributeUsage(AttributeTargets.Property, AllowMultiple = false)]
 public sealed class DirectoryExistsAttribute : ValidationAttribute
 {

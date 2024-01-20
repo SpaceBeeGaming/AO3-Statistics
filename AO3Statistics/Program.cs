@@ -1,11 +1,11 @@
 ﻿using System.Net;
 using System.Net.Http.Headers;
 
-using AO3Statistics.ConsoleApp;
-using AO3Statistics.ConsoleApp.Enums;
-using AO3Statistics.ConsoleApp.Models;
-using AO3Statistics.ConsoleApp.Services;
-using AO3Statistics.ConsoleApp.Services.DataDestinationService;
+using AO3Statistics;
+using AO3Statistics.Enums;
+using AO3Statistics.Models;
+using AO3Statistics.Services;
+using AO3Statistics.Services.DataDestinationService;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;

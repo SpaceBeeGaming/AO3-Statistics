@@ -1,11 +1,11 @@
-﻿using AO3Statistics.ConsoleApp.ExtensionMethods;
-using AO3Statistics.ConsoleApp.Models;
-using AO3Statistics.ConsoleApp.Services.DataDestinationService;
+﻿using AO3Statistics.ExtensionMethods;
+using AO3Statistics.Models;
+using AO3Statistics.Services.DataDestinationService;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp;
+namespace AO3Statistics;
 internal class MainLogic(
     ILogger<MainLogic> logger,
     AO3Api aO3Api,

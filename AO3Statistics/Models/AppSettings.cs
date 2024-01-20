@@ -1,12 +1,12 @@
 ﻿using System.ComponentModel.DataAnnotations;
 using System.Globalization;
 
-using AO3Statistics.ConsoleApp.Enums;
-using AO3Statistics.ConsoleApp.ValidationAttributes;
+using AO3Statistics.Enums;
+using AO3Statistics.ValidationAttributes;
 
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp.Models;
+namespace AO3Statistics.Models;
 
 public sealed class OutputOptions
 {

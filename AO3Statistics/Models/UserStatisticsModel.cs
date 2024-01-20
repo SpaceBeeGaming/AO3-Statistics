@@ -1,4 +1,4 @@
-﻿namespace AO3Statistics.ConsoleApp.Models;
+﻿namespace AO3Statistics.Models;
 
 public sealed class UserStatisticsModel
 {

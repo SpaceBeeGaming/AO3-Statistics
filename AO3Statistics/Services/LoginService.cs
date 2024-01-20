@@ -1,13 +1,13 @@
 ﻿using System.Net;
 
-using AO3Statistics.ConsoleApp.Enums;
-using AO3Statistics.ConsoleApp.ExtensionMethods;
-using AO3Statistics.ConsoleApp.Models;
+using AO3Statistics.Enums;
+using AO3Statistics.ExtensionMethods;
+using AO3Statistics.Models;
 
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp.Services;
+namespace AO3Statistics.Services;
 public class LoginService(ILogger<LoginService> logger,
     IOptions<UrlOptions> urlOptions,
     IOptions<UserOptions> userOptions,

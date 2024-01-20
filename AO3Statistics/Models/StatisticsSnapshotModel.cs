@@ -1,6 +1,6 @@
 ﻿using System.Text;
 
-namespace AO3Statistics.ConsoleApp.Models;
+namespace AO3Statistics.Models;
 
 /// <summary>
 /// Contains the combined user and work statistics.

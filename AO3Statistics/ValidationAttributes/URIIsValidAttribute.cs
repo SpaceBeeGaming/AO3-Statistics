@@ -1,6 +1,6 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
-namespace AO3Statistics.ConsoleApp.ValidationAttributes;
+namespace AO3Statistics.ValidationAttributes;
 internal class URIIsValidAttribute(string host, string scheme = "https") : ValidationAttribute
 {
     private readonly string host = host;

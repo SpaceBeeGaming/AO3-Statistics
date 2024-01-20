@@ -1,4 +1,4 @@
-﻿using AO3Statistics.ConsoleApp.Models;
+﻿using AO3Statistics.Models;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -6,7 +6,7 @@ using CsvHelper.Configuration;
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
-namespace AO3Statistics.ConsoleApp.Services.DataDestinationService;
+namespace AO3Statistics.Services.DataDestinationService;
 public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions<OutputOptions> outputOptions, ILogger<MultiCSVDataDestination> logger) : IDataDestination
 {
     private readonly IOptions<UserOptions> userOptions = userOptions;

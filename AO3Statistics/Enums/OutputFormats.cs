@@ -1,4 +1,4 @@
-﻿namespace AO3Statistics.ConsoleApp.Enums;
+﻿namespace AO3Statistics.Enums;
 public enum OutputFormats
 {
     MultiCSV

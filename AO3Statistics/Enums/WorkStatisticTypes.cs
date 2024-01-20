@@ -1,6 +1,6 @@
 ﻿using System.Diagnostics;
 
-namespace AO3Statistics.ConsoleApp.Enums;
+namespace AO3Statistics.Enums;
 
 /// <summary>
 /// List of the different types of statistics a work on AO3 has.
