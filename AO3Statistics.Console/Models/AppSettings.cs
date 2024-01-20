@@ -1,4 +1,5 @@
 ﻿using System.ComponentModel.DataAnnotations;
+using System.Globalization;
 
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ValidationAttributes;
@@ -16,6 +17,9 @@ public sealed class OutputOptions
     [Required]
     [DirectoryExists]
     public required string FolderPath { get; init; }
+
+    [Required]
+    public required CultureInfo OutputCulture { get; init; }
 }
 
 public sealed class UrlOptions

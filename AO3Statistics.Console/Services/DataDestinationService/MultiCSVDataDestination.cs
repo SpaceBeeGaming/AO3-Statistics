@@ -1,6 +1,4 @@
-﻿using System.Globalization;
-
-using AO3Statistics.ConsoleApp.Models;
+﻿using AO3Statistics.ConsoleApp.Models;
 
 using CsvHelper;
 using CsvHelper.Configuration;
@@ -14,8 +12,8 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
     private readonly IOptions<UserOptions> userOptions = userOptions;
     private readonly IOptions<OutputOptions> outputOptions = outputOptions;
     private readonly ILogger<MultiCSVDataDestination> logger = logger;
-    private readonly CsvConfiguration appendConfiguration = new(new CultureInfo("fi-fi")) { HasHeaderRecord = false };
-    private readonly CsvConfiguration newConfiguration = new(new CultureInfo("fi-fi"));
+    private readonly CsvConfiguration appendConfiguration = new(outputOptions.Value.OutputCulture) { HasHeaderRecord = false };
+    private readonly CsvConfiguration newConfiguration = new(outputOptions.Value.OutputCulture);
 
     public void SaveData(StatisticsSnapshotModel statisticsSnapshot)
     {
