@@ -1,18 +1,20 @@
 ﻿using System.Net;
+
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ExtensionMethods;
 using AO3Statistics.ConsoleApp.Models;
+
 using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AO3Statistics.ConsoleApp.Services;
-public class LoginManager(ILogger<LoginManager> logger,
+public class LoginService(ILogger<LoginService> logger,
     IOptions<UrlOptions> urlOptions,
     IOptions<UserOptions> userOptions,
     HtmlNavigator htmlNavigator,
     HttpClient httpClient)
 {
-    private readonly ILogger<LoginManager> logger = logger;
+    private readonly ILogger<LoginService> logger = logger;
     private readonly HtmlNavigator htmlNavigator = htmlNavigator;
     private readonly HttpClient httpClient = httpClient;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;

@@ -11,12 +11,12 @@ public class AO3Api(
     IOptions<UrlOptions> urlOptions,
     HtmlNavigator htmlNavigator,
     HttpClient httpClient,
-    LoginManager loginManager)
+    LoginService loginService)
 {
     private readonly ILogger<AO3Api> logger = logger;
     private readonly HtmlNavigator htmlNavigator = htmlNavigator;
     private readonly HttpClient httpClient = httpClient;
-    private readonly LoginManager loginManager = loginManager;
+    private readonly LoginService loginService = loginService;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;
 
     /// <summary>
@@ -24,13 +24,13 @@ public class AO3Api(
     /// </summary>
     /// <returns>Returns <see langword="true"/> on success, <see langword="false"/> otherwise.</returns>
     /// <exception cref="InvalidOperationException"> Thrown when login is attempted while already logged in.</exception>
-    public Task<bool> LoginAsync() => loginManager.LoginAsync();
+    public Task<bool> LoginAsync() => loginService.LoginAsync();
 
     /// <summary>
     /// Logs out of AO3.
     /// </summary>
     /// <exception cref="InvalidOperationException">Thrown when logout is attempted while logged out.</exception>
-    public Task LogoutAsync() => loginManager.LogoutAsync();
+    public Task LogoutAsync() => loginService.LogoutAsync();
 
     public async Task<StatisticsSnapshotModel?> GetStatisticsSnapshotAsync()
     {
