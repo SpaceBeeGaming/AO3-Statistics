@@ -81,15 +81,12 @@ try
     host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with return code: {exitCode}", exitCode);
     Environment.ExitCode = exitCode;
 }
-catch (AggregateException ex)
+catch (OptionsValidationException ex)
 {
-    if (ex.InnerException is OptionsValidationException validationEx)
+    Console.WriteLine("Configuration issues:");
+    foreach (string failure in ex.Failures)
     {
-        Console.WriteLine("Configuration issues:");
-        foreach (string failure in validationEx.Failures)
-        {
-            Console.WriteLine(failure);
-        }
+        Console.WriteLine(failure);
     }
 }
 
