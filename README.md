@@ -46,7 +46,7 @@ Property | Description
 `PasswordIsProtected` | Used as a flag to tell the program it should run in automatic mode. This also hides the instructions for enabling automated mode if you prefer to use the program exclusively in manual mode.
 `FolderPath` | The folder where the program output will be stored. You by can change it to your liking. This directory must exist you must have permission to access it. The directory will **not** be created if it is missing.
 `OutputFormat` | The format in which the data is saved. See bellow for valid values.
-`OutputCulture`| The culture to use for output. WThis will affect things like date and number formatting and other `OutputFormat` specific details. Generally you will want to set this according to the language you use in the program you read the data in with. For example, you'll want this to match the display language of MS Excel if you use it to interpret the data, otherwise Excel may not read the csv in correctly/you have to manually specify how the csv is formatted.
+`OutputCulture`| The culture to use for output. This will affect things like date and number formatting and other `OutputFormat` specific details. Generally you will want to set this according to the language you use in the program you read the data in with. For example, you'll want this to match the display language of MS Excel if you use it to interpret the data, otherwise Excel may not read the csv in correctly/you have to manually specify how the csv is formatted.
 
 #### Valid values for `OutputFormat`
 
