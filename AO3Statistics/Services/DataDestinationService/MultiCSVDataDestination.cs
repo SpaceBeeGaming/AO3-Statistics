@@ -71,7 +71,6 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
         string filePath = Path.Join(outputOptions.Value.FolderPath, $"{userOptions.Value.Username}.csv");
         try
         {
-
             if (File.Exists(filePath))
             {
                 using StreamWriter streamWriter = new(filePath, true);

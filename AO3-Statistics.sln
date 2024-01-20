@@ -9,7 +9,7 @@ Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Solution Items", "Solution 
 		LICENSE = LICENSE
 	EndProjectSection
 EndProject
-Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AO3Statistics.ConsoleApp", "AO3Statistics.Console\AO3Statistics.ConsoleApp.csproj", "{34FF5E47-9F5E-4D21-92E5-FDBF3CD08D0D}"
+Project("{9A19103F-16F7-4668-BE54-9A1E7A4F7556}") = "AO3Statistics", "AO3Statistics\AO3Statistics.csproj", "{34FF5E47-9F5E-4D21-92E5-FDBF3CD08D0D}"
 EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
