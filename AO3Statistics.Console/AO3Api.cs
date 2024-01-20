@@ -64,11 +64,10 @@ public class AO3Api(
             return null;
         }
 
-        StatisticsSnapshotModel statisticsSnapshot = new()
+        StatisticsSnapshotModel statisticsSnapshot = new(DateOnly.FromDateTime(DateTime.Now))
         {
             UserStatistics = userStatistics,
-            WorkStatistics = workStatistics.WorkStatistics,
-            Date = DateOnly.FromDateTime(DateTime.Now),
+            WorkStatistics = workStatistics.WorkStatistics
         };
 
         return statisticsSnapshot;

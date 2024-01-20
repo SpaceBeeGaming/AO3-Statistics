@@ -5,21 +5,40 @@ namespace AO3Statistics.ConsoleApp.Models;
 /// <summary>
 /// Contains the combined user and work statistics.
 /// </summary>
-public sealed class StatisticsSnapshotModel
+#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
+public sealed class StatisticsSnapshotModel(DateOnly date)
+#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 {
+    private List<WorkStatisticsModel> _workStatistics;
+    private UserStatisticsModel _userStatistics;
+
     /// <summary>
     /// Date of creation.
     /// </summary>
-    public DateOnly Date { get; init; }
+    public DateOnly Date { get; init; } = date;
     /// <summary>
     /// A list containing the statistics for users works.
     /// </summary>
-    public required List<WorkStatisticsModel> WorkStatistics { get; init; }
+    public required List<WorkStatisticsModel> WorkStatistics
+    {
+        get => _workStatistics; init
+        {
+            _workStatistics = value;
+            _workStatistics.ForEach(x => x.Date = Date);
+        }
+    }
 
     /// <summary>
     /// Contains the users statistics.
     /// </summary>
-    public required UserStatisticsModel UserStatistics { get; init; }
+    public required UserStatisticsModel UserStatistics
+    {
+        get => _userStatistics; init
+        {
+            _userStatistics = value;
+            _userStatistics.Date = Date;
+        }
+    }
 
     /// <summary>
     /// Returns the combined user and work statistics in a pretty print format.

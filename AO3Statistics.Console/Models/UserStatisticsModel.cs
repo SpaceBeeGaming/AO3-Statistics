@@ -2,6 +2,7 @@
 
 public sealed class UserStatisticsModel
 {
+    public DateOnly Date { get; set; }
     public required string Username { get; init; }
     public required int UserSubscriptions { get; init; }
     public required int Kudos { get; init; }

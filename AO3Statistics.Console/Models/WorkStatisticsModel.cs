@@ -1,6 +1,7 @@
 ﻿namespace AO3Statistics.ConsoleApp.Models;
 public sealed class WorkStatisticsModel
 {
+    public DateOnly Date { get; set; }
     public required string WorkId { get; init; }
     public required string WorkName { get; init; }
     public required string FandomName { get; init; }

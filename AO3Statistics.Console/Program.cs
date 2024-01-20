@@ -2,11 +2,14 @@
 using System.Net.Http.Headers;
 
 using AO3Statistics.ConsoleApp;
+using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.Models;
+using AO3Statistics.ConsoleApp.Services.DataDestinationService;
 
 using Microsoft.Extensions.Configuration;
 using Microsoft.Extensions.DependencyInjection;
 using Microsoft.Extensions.Hosting;
+using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 CookieContainer cookieContainer = new();
@@ -57,13 +60,25 @@ builder.Services.AddSingleton(httpClient);
 builder.Services.AddSingleton<HtmlNavigator>();
 builder.Services.AddSingleton<LoginManager>();
 builder.Services.AddSingleton<AO3Api>();
-builder.Services.AddHostedService<ConsoleHostedService>();
+builder.Services.AddSingleton<MainLogic>();
+builder.Services.AddKeyedSingleton<IDataDestination, MultiCSVDataDestination>("MultiCSV");
+
+builder.Services.AddSingleton<IDataDestination>(serviceProvider =>
+{
+    OutputFormats outputFormat = serviceProvider.GetRequiredService<IOptions<OutputOptions>>().Value.OutputFormat;
+    return serviceProvider.GetRequiredKeyedService<IDataDestination>(outputFormat.ToString());
+});
 
 var host = builder.Build();
 
 try
 {
-    await host.RunAsync();
+    await host.StartAsync();
+
+    int exitCode = await host.Services.GetRequiredService<MainLogic>().Run();
+
+    host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with return code: {exitCode}", exitCode);
+    Environment.ExitCode = exitCode;
 }
 catch (AggregateException ex)
 {
