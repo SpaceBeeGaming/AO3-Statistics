@@ -7,6 +7,7 @@
     <Nullable>enable</Nullable>
     <UserSecretsId>72901643-8082-472b-8a26-30dbf18a9d63</UserSecretsId>
 		<PublishSingleFile>true</PublishSingleFile>
+		<DebugType>embedded</DebugType>
   </PropertyGroup>
 
   <ItemGroup>
@@ -26,4 +27,9 @@
     </None>
   </ItemGroup>
 
+	<Target Name="AfterPublishTasks" AfterTargets="Publish">
+		<Exec Command="XCOPY &quot;$(ProjectDir)Third Party Licenses\*.*&quot; &quot;$(PublishDir)Third Party Licenses\&quot; /S /Y" />
+		<Delete Files="$(PublishDir)appsettings.Development.json"/>
+		<Copy SourceFiles="$(SolutionDir)LICENSE" DestinationFiles="$(PublishDir)LICENSE.txt"/>
+	</Target>
 </Project>
