@@ -18,12 +18,12 @@ namespace AO3Statistics.ConsoleApp.Services;
 /// <summary>
 /// Provides methods to extract data from <see cref="HtmlDocument"/>.
 /// </summary>
-public sealed class HtmlNavigator(
-    ILogger<HtmlNavigator> logger,
+public sealed class HtmlNavigationService(
+    ILogger<HtmlNavigationService> logger,
     IOptions<UserOptions> userOptions,
     IOptions<XPathOptions> xPathOptions)
 {
-    private readonly ILogger<HtmlNavigator> logger = logger;
+    private readonly ILogger<HtmlNavigationService> logger = logger;
     private readonly IOptions<UserOptions> userOptions = userOptions;
     private readonly IOptions<XPathOptions> xPathOptions = xPathOptions;
     private HtmlDocument? _document;

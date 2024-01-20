@@ -58,7 +58,7 @@ builder.Services.AddSingleton<IValidateOptions<UrlOptions>, ValidateUrlOptions>(
 builder.Services.AddSingleton<IValidateOptions<UserOptions>, ValidateUserOptions>();
 builder.Services.AddSingleton<IValidateOptions<XPathOptions>, ValidateXPathOptions>();
 builder.Services.AddSingleton(httpClient);
-builder.Services.AddSingleton<HtmlNavigator>();
+builder.Services.AddSingleton<HtmlNavigationService>();
 builder.Services.AddSingleton<LoginService>();
 builder.Services.AddSingleton<AO3Api>();
 builder.Services.AddSingleton<MainLogic>();

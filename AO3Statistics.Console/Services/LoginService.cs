@@ -11,11 +11,11 @@ namespace AO3Statistics.ConsoleApp.Services;
 public class LoginService(ILogger<LoginService> logger,
     IOptions<UrlOptions> urlOptions,
     IOptions<UserOptions> userOptions,
-    HtmlNavigator htmlNavigator,
+    HtmlNavigationService htmlNavigationService,
     HttpClient httpClient)
 {
     private readonly ILogger<LoginService> logger = logger;
-    private readonly HtmlNavigator htmlNavigator = htmlNavigator;
+    private readonly HtmlNavigationService htmlNavigationService = htmlNavigationService;
     private readonly HttpClient httpClient = httpClient;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;
     private readonly IOptions<UserOptions> userOptions = userOptions;
@@ -48,11 +48,11 @@ public class LoginService(ILogger<LoginService> logger,
         }
 
         // Construct the content for the login attempt.
-        htmlNavigator.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
+        htmlNavigationService.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
 
         // Check if we're already logged in. No need to try to do it twice.
         // This condition should never be met unless this program has a bug.
-        if (htmlNavigator.IsDocumentLoaded && htmlNavigator.GetLoggedInStatus() is LoggedInStatus.LoggedId)
+        if (htmlNavigationService.IsDocumentLoaded && htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedId)
         {
             logger.LogInformation("Already logged in.");
             return true;
@@ -60,7 +60,7 @@ public class LoginService(ILogger<LoginService> logger,
 
         Dictionary<string, string> content = new()
         {
-            { "authenticity_token", htmlNavigator.GetLoginFormAuthenticityToken() },
+            { "authenticity_token", htmlNavigationService.GetLoginFormAuthenticityToken() },
             { "user[login]", userOptions.Value.Username },
             { "user[password]", userOptions.Value.Password }
         };
@@ -84,8 +84,8 @@ public class LoginService(ILogger<LoginService> logger,
         }
 
         // Check if we logged in successfully or not.
-        htmlNavigator.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
-        if (htmlNavigator.GetLoggedInStatus() is LoggedInStatus.LoggedId)
+        htmlNavigationService.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
+        if (htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedId)
         {
             logger.LogInformation("Successfully logged in as {Username}", userOptions.Value.Username);
             return true;
@@ -117,18 +117,18 @@ public class LoginService(ILogger<LoginService> logger,
         }
 
         // Construct the content for the logout attempt.
-        htmlNavigator.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
+        htmlNavigationService.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
 
         // Check if we're already logged out. No need to try to do it twice.
         // This condition should never be met unless this program has a bug.
-        if (htmlNavigator.IsDocumentLoaded && htmlNavigator.GetLoggedInStatus() is LoggedInStatus.LoggedOut)
+        if (htmlNavigationService.IsDocumentLoaded && htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedOut)
         {
             return;
         }
 
         Dictionary<string, string> content = new()
         {
-            { "authenticity_token", htmlNavigator.GetLogoutFormAuthenticityToken() },
+            { "authenticity_token", htmlNavigationService.GetLogoutFormAuthenticityToken() },
             { "_method", "delete" }
         };
 
@@ -149,8 +149,8 @@ public class LoginService(ILogger<LoginService> logger,
         }
 
         // Check if we logged out successfully or not.
-        htmlNavigator.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
-        if (htmlNavigator.GetLoggedInStatus() is LoggedInStatus.LoggedOut)
+        htmlNavigationService.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
+        if (htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedOut)
         {
             logger.LogInformation("Successfully logged out.");
         }

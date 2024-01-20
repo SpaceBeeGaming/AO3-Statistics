@@ -9,12 +9,12 @@ namespace AO3Statistics.ConsoleApp.Services;
 public class AO3Api(
     ILogger<AO3Api> logger,
     IOptions<UrlOptions> urlOptions,
-    HtmlNavigator htmlNavigator,
+    HtmlNavigationService htmlNavigationService,
     HttpClient httpClient,
     LoginService loginService)
 {
     private readonly ILogger<AO3Api> logger = logger;
-    private readonly HtmlNavigator htmlNavigator = htmlNavigator;
+    private readonly HtmlNavigationService htmlNavigationService = htmlNavigationService;
     private readonly HttpClient httpClient = httpClient;
     private readonly LoginService loginService = loginService;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;
@@ -47,16 +47,16 @@ public class AO3Api(
             return null;
         }
 
-        htmlNavigator.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
+        htmlNavigationService.LoadDocument(await getResponse.Content.ReadAsStreamAsync());
 
-        UserStatisticsModel? userStatistics = htmlNavigator.GetUserStatistics();
+        UserStatisticsModel? userStatistics = htmlNavigationService.GetUserStatistics();
         if (userStatistics is null)
         {
             logger.LogError("Failure to parse user statistics.");
             return null;
         }
 
-        var workStatistics = htmlNavigator.GetWorkStatistics();
+        var workStatistics = htmlNavigationService.GetWorkStatistics();
 
         if (workStatistics.IsSuccess is false)
         {
