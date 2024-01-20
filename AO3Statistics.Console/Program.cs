@@ -36,23 +36,23 @@ builder.Services.AddOptionsWithValidateOnStart<UserOptions>()
         {
             options.Password = PasswordEncryptor.UnProtectPassword(options.Password);
         }
-    })
-    .ValidateDataAnnotations();
+    });
 
 builder.Services.AddOptionsWithValidateOnStart<OutputOptions>()
-    .Bind(builder.Configuration.GetSection(nameof(OutputOptions)))
-    .ValidateDataAnnotations();
+    .Bind(builder.Configuration.GetSection(nameof(OutputOptions)));
 
 builder.Services.AddOptionsWithValidateOnStart<XPathOptions>()
-    .Bind(builder.Configuration.GetSection(nameof(XPathOptions)))
-    .ValidateDataAnnotations();
+    .Bind(builder.Configuration.GetSection(nameof(XPathOptions)));
 
 builder.Services.AddOptionsWithValidateOnStart<UrlOptions>()
     .Bind(builder.Configuration.GetSection(nameof(UrlOptions)))
     .PostConfigure<IOptions<UserOptions>>((options, userOptions) =>
-        options.StatsUrl = new Uri(options.StatsUrl.OriginalString.Replace("<USERNAME>", userOptions.Value.Username)))
-    .ValidateDataAnnotations();
+        options.StatsUrl = new Uri(options.StatsUrl.OriginalString.Replace("<USERNAME>", userOptions.Value.Username)));
 
+builder.Services.AddSingleton<IValidateOptions<OutputOptions>, ValidateOutputOptions>();
+builder.Services.AddSingleton<IValidateOptions<UrlOptions>, ValidateUrlOptions>();
+builder.Services.AddSingleton<IValidateOptions<UserOptions>, ValidateUserOptions>();
+builder.Services.AddSingleton<IValidateOptions<XPathOptions>, ValidateXPathOptions>();
 builder.Services.AddSingleton(httpClient);
 builder.Services.AddSingleton<HtmlNavigator>();
 builder.Services.AddSingleton<LoginManager>();

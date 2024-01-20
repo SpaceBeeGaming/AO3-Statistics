@@ -3,6 +3,8 @@
 using AO3Statistics.ConsoleApp.Enums;
 using AO3Statistics.ConsoleApp.ValidationAttributes;
 
+using Microsoft.Extensions.Options;
+
 namespace AO3Statistics.ConsoleApp.Models;
 
 public sealed class OutputOptions
@@ -63,3 +65,15 @@ public sealed class XPathOptions
     [XPathIsValid]
     public required string WorkStatisticsXPath { get; init; }
 }
+
+[OptionsValidator]
+public partial class ValidateOutputOptions : IValidateOptions<OutputOptions> { }
+
+[OptionsValidator]
+public partial class ValidateUrlOptions : IValidateOptions<UrlOptions> { }
+
+[OptionsValidator]
+public partial class ValidateUserOptions : IValidateOptions<UserOptions> { }
+
+[OptionsValidator]
+public partial class ValidateXPathOptions : IValidateOptions<XPathOptions> { }
