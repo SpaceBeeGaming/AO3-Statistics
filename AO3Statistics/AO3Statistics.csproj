@@ -8,6 +8,7 @@
 		<UserSecretsId>72901643-8082-472b-8a26-30dbf18a9d63</UserSecretsId>
 		<PublishSingleFile>true</PublishSingleFile>
 		<DebugType>embedded</DebugType>
+		<PackageLicenseExpression>MIT</PackageLicenseExpression>
 	</PropertyGroup>
 
 	<ItemGroup>
