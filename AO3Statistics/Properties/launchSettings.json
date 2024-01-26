@@ -1,0 +1,20 @@
+{
+  "profiles": {
+    "WSL": {
+      "commandName": "WSL2",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      },
+      "distributionName": ""
+    },
+    "Production": {
+      "commandName": "Project"
+    },
+    "Development": {
+      "commandName": "Project",
+      "environmentVariables": {
+        "DOTNET_ENVIRONMENT": "Development"
+      }
+    }
+  }
+}

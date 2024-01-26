@@ -1,8 +1,0 @@
-{
-  "profiles": {
-    "AO3Test": {
-      "commandName": "Project",
-      "commandLineArgs": "https://archiveofourown.org/works/34722751 \"C:\\Users\\janne\\Desktop\\sister.csv\""
-    }
-  }
-}
