@@ -70,7 +70,7 @@ builder.Services.AddSingleton<IDataDestination>(serviceProvider =>
     return serviceProvider.GetRequiredKeyedService<IDataDestination>(outputFormat.ToString());
 });
 
-var host = builder.Build();
+IHost host = builder.Build();
 
 try
 {
@@ -78,7 +78,7 @@ try
 
     int exitCode = await host.Services.GetRequiredService<MainLogic>().Run();
 
-    host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with return code: {exitCode}", exitCode);
+    host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with exit code: {exitCode}", exitCode);
     Environment.ExitCode = exitCode;
 }
 catch (OptionsValidationException ex)
