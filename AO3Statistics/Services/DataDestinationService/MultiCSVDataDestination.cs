@@ -54,7 +54,7 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
                     logger.LogInformation("Created a new file for {WorkName}", workStatisticsModel.WorkName);
                 }
 
-                logger.LogInformation("""Work "{workName}" saved to "{filePath}".""", workStatisticsModel.WorkName, filePath);
+                logger.LogInformation("""Work "{workName}" saved to "{filePath}".""", workStatisticsModel.WorkName, Path.GetFullPath(filePath));
             }
             catch (UnauthorizedAccessException ex)
             {
@@ -97,7 +97,7 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
                 }
             }
 
-            logger.LogInformation("""User statistics saved to "{filePath}".""", filePath);
+            logger.LogInformation("""User statistics saved to "{filePath}".""", Path.GetFullPath(filePath));
         }
         catch (UnauthorizedAccessException ex)
         {
