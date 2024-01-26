@@ -12,7 +12,9 @@ I've designed the program to be easy to automatize, for example, by using the Wi
 
 The program doesn't need installation in the traditional sense. The only requirement is that the program executable and the `appsettings.json` file are in the same folder.
 
-Just download the applicable zip (Windows x64 or Linux x64) file from the [Releases page](https://github.com/SpaceBeeGaming/AO3-Statistics/releases/latest) and extract it to a preferably empty folder.
+Just download the zip (Windows x64) file from the [Releases page](https://github.com/SpaceBeeGaming/AO3-Statistics/releases/latest) and extract it to a preferably empty folder.
+
+You could also manually compile the project if you want it for other operating systems.
 
 ## Configuration
 
@@ -39,7 +41,7 @@ The relevant portion of the configuration file is as follows:
 
 Property | Description
 :---: | ---
-`Username` | Your AO3 username and is Case sensitive.
+`Username` | Your AO3 username and **is** Case sensitive.
 `Password` | Used for the automated mode. Do **NOT** store the plain text password. Instead use the encrypted variant provided when running in manual mode (see below).
 `PasswordIsProtected` | Used as a flag to tell the program it should run in automatic mode. This also hides the instructions for enabling automated mode if you prefer to use the program exclusively in manual mode.
 `FolderPath` | The folder where the program output will be stored. You by can change it to your liking. This directory must exist you must have permission to access it. The directory will **not** be created if it is missing.
