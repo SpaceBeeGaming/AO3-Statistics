@@ -27,7 +27,10 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
         {
             try
             {
-                string filePath = Path.Join(outputOptions.Value.FolderPath, $"{workStatisticsModel.WorkName}.csv");
+                string fandom = workStatisticsModel.FandomName.Split(',', StringSplitOptions.TrimEntries).First().Replace(':', '_');
+                string fileName = $"{fandom} - {workStatisticsModel.WorkName}.csv";
+                string cleanFileName = string.Join("_", fileName.Split(Path.GetInvalidFileNameChars()));
+                string filePath = Path.Join(outputOptions.Value.FolderPath, cleanFileName);
                 if (File.Exists(filePath))
                 {
                     using StreamWriter streamWriter = new(filePath, true);
@@ -39,7 +42,7 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
                 }
                 else
                 {
-                    using StreamWriter streamWriter = new(filePath, true);
+                    using StreamWriter streamWriter = new(filePath);
                     using (CsvWriter csvWriter = new(streamWriter, newConfiguration))
                     {
                         csvWriter.WriteHeader<WorkStatisticsModel>();
@@ -68,7 +71,9 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
 
     private void SaveUserStatistics(UserStatisticsModel statisticsSnapshot)
     {
-        string filePath = Path.Join(outputOptions.Value.FolderPath, $"{userOptions.Value.Username}.csv");
+        string fileName = $"{userOptions.Value.Username}.csv";
+        string cleanFileName = string.Join("_", fileName.Split(Path.GetInvalidFileNameChars()));
+        string filePath = Path.Join(outputOptions.Value.FolderPath, cleanFileName);
         try
         {
             if (File.Exists(filePath))
@@ -82,7 +87,7 @@ public class MultiCSVDataDestination(IOptions<UserOptions> userOptions, IOptions
             }
             else
             {
-                using StreamWriter streamWriter = new(filePath, true);
+                using StreamWriter streamWriter = new(filePath);
                 using (CsvWriter csvWriter = new(streamWriter, newConfiguration))
                 {
                     csvWriter.WriteHeader<UserStatisticsModel>();
