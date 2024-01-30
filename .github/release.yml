@@ -9,6 +9,6 @@ changelog:
       exclude:
         labels:
           - dependencies
-    - title: Dependecy Updates
+    - title: Dependency Updates
       labels:
         - dependencies
