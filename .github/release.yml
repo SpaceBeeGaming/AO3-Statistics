@@ -1,0 +1,14 @@
+changelog:
+  exclude:
+    labels:
+      - repo
+  categories:
+    - title: Program Changes
+      labels:
+        - '*'
+      exclude:
+        labels:
+          - dependencies
+    - title: Dependecy Updates
+      labels:
+        - dependencies
