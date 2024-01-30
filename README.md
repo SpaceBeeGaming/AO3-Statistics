@@ -9,6 +9,7 @@ You **must** have an account on AO3, and you can only collect your own statistic
 I've designed the program to be easy to automate, for example, using the Windows Task Scheduler. Alternatively, you can run it interactively if you do not want to save your AO3 password on your device.
 
 [![CodeQL](https://github.com/SpaceBeeGaming/AO3-Statistics/actions/workflows/github-code-scanning/codeql/badge.svg?branch=master)](https://github.com/SpaceBeeGaming/AO3-Statistics/actions/workflows/github-code-scanning/codeql)
+[![.NET](https://github.com/SpaceBeeGaming/AO3-Statistics/actions/workflows/dotnet.yml/badge.svg)](https://github.com/SpaceBeeGaming/AO3-Statistics/actions/workflows/dotnet.yml)
 
 ## Installation
 
