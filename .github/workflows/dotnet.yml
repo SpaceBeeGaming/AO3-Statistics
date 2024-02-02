@@ -11,6 +11,7 @@ on:
 
 jobs:
   build:
+    name: "Build Project"
 
     runs-on: windows-latest
     strategy:
@@ -18,9 +19,9 @@ jobs:
         dotnet-version: ['8.x']
 
     steps:
-    - uses: actions/checkout@v3
+    - uses: actions/checkout@v4
     - name: Setup .NET ${{matrix.dotnet-version}}
-      uses: actions/setup-dotnet@v3
+      uses: actions/setup-dotnet@v4
       with:
         dotnet-version: ${{matrix.dotnet-version}}
     - name: Restore dependencies
