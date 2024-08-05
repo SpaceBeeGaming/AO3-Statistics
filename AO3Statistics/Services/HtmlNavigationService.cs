@@ -63,7 +63,7 @@ public sealed class HtmlNavigationService(
     /// Gets the authenticity token from the login from.
     /// </summary>
     /// <returns>The authenticity token.</returns>
-    /// <exception cref="HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref="HtmlNavigationException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
     public string GetLoginFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.Value.LoginFormAuthenticityTokenXPath);
 
@@ -71,7 +71,7 @@ public sealed class HtmlNavigationService(
     /// Gets the authenticity token from the logout from.
     /// </summary>
     /// <returns>The authenticity token.</returns>
-    /// <exception cref=" HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref=" HtmlNavigationException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
 
     public string GetLogoutFormAuthenticityToken() => GetAuthenticityToken(xPathOptions.Value.LogoutFormAuthenticityTokenXPath);
@@ -257,7 +257,7 @@ public sealed class HtmlNavigationService(
         foreach (HtmlNode child in workStatisticsNode.ChildNodes.Where(x => x.Name is "li"))
         {
             HtmlNode node = child.SelectSingleNode("./dl", true)
-                 ?? throw new HtmlNavigatorException("Specified node wasn't found in the document.", $"{child.XPath}./dl", _document);
+                 ?? throw new HtmlNavigationException("Specified node wasn't found in the document.", $"{child.XPath}./dl", _document);
 
             workNodes.Add(node);
         }
@@ -272,7 +272,7 @@ public sealed class HtmlNavigationService(
     /// </summary>
     /// <param name="authenticityTokenXPath">The Xpath where the authenticity token can be found.</param>
     /// <returns>The authenticity token</returns>
-    /// <exception cref="HtmlNavigatorException">Thrown when the token cannot be found for whatever reason.</exception>
+    /// <exception cref="HtmlNavigationException">Thrown when the token cannot be found for whatever reason.</exception>
     /// <exception cref="InvalidOperationException">Thrown when <see cref="IsDocumentLoaded"/> is <see langword="false"/>.</exception>
     private string GetAuthenticityToken(string authenticityTokenXPath)
     {
@@ -280,12 +280,12 @@ public sealed class HtmlNavigationService(
 
         HtmlNode node = SelectSingleNodeFromRoot(_document, authenticityTokenXPath);
         string nameAttribute = node.GetAttributeValue("name", null)
-            ?? throw new HtmlNavigatorException("Node doesn't contain attribute: 'name'", node);
+            ?? throw new HtmlNavigationException("Node doesn't contain attribute: 'name'", node);
         return nameAttribute switch
         {
             "authenticity_token" => node.GetAttributeValue("value", null)
-                ?? throw new HtmlNavigatorException("Node doesn't contain attribute: 'value'", node),
-            _ => throw new HtmlNavigatorException($"Unexpected value for attribute: 'name' ({nameAttribute})", node)
+                ?? throw new HtmlNavigationException("Node doesn't contain attribute: 'value'", node),
+            _ => throw new HtmlNavigationException($"Unexpected value for attribute: 'name' ({nameAttribute})", node)
         };
     }
 
@@ -302,12 +302,12 @@ public sealed class HtmlNavigationService(
     /// </summary>
     /// <param name="document">The <see cref="HtmlDocument"/> to search from.</param>
     /// <param name="xPath">The XPath to search.</param>
-    /// <returns>The <see cref="HtmlNode"/> if found, otherwise throws a <see cref="HtmlNavigatorException"/>.</returns>
-    /// <exception cref="HtmlNavigatorException">Thrown if the <paramref name="document"/>doesn't contain the specified node.</exception>
+    /// <returns>The <see cref="HtmlNode"/> if found, otherwise throws a <see cref="HtmlNavigationException"/>.</returns>
+    /// <exception cref="HtmlNavigationException">Thrown if the <paramref name="document"/>doesn't contain the specified node.</exception>
     private static HtmlNode SelectSingleNodeFromRoot(HtmlDocument document, string xPath)
     {
         return document.DocumentNode.SelectSingleNode(xPath)
-            ?? throw new HtmlNavigatorException("Specified node wasn't found in the document.", xPath, document);
+            ?? throw new HtmlNavigationException("Specified node wasn't found in the document.", xPath, document);
     }
 
     /// <summary>
