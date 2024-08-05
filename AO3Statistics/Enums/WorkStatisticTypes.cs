@@ -1,20 +1,53 @@
-﻿using System.Diagnostics;
-
-namespace AO3Statistics.Enums;
+﻿namespace AO3Statistics.Enums;
 
 /// <summary>
 /// List of the different types of statistics a work on AO3 has.
 /// </summary>
 public enum WorkStatisticTypes
 {
+    /// <summary>
+    /// Represents the ID of the work.
+    /// </summary>
     WorkId,
+
+    /// <summary>
+    /// Represents the name of the work.
+    /// </summary>
     WorkName,
+
+    /// <summary>
+    /// Represents the name of the fandom.
+    /// </summary>
     FandomName,
+
+    /// <summary>
+    /// Represents the word count of the work.
+    /// </summary>
     WordCount,
+
+    /// <summary>
+    /// Represents the number of subscriptions for the work.
+    /// </summary>
     Subscriptions,
+
+    /// <summary>
+    /// Represents the number of hits/views for the work.
+    /// </summary>
     Hits,
+
+    /// <summary>
+    /// Represents the number of kudos for the work.
+    /// </summary>
     Kudos,
+
+    /// <summary>
+    /// Represents the number of comment threads for the work.
+    /// </summary>
     CommentThreads,
+
+    /// <summary>
+    /// Represents the number of bookmarks for the work.
+    /// </summary>
     Bookmarks
 }
 
@@ -23,15 +56,14 @@ public enum WorkStatisticTypes
 /// </summary>
 public static class WorkStatisticTypesMethods
 {
-
     /// <summary>
-    /// Returns a string representation of the specified value.
+    /// Converts the <see cref="WorkStatisticTypes"/> to its string representation.
     /// </summary>
-    /// <param name="type">The <see cref="WorkStatisticTypes"/> to fetch.</param>
-    /// <param name="_">A dummy to differentiate from other ToString() methods.</param>
-    /// <returns>Returns a string representation of the value specified by <paramref name="type"/>. Formatted as they are referenced in AO3 html.</returns>
+    /// <param name="type">The <see cref="WorkStatisticTypes"/> value to convert.</param>
+    /// <param name="_">A placeholder parameter to differentiate from the default ToString() method.</param>
+    /// <returns>The string representation of the <see cref="WorkStatisticTypes"/> value. Formatted as they are referenced in AO3 html.</returns>
+    /// <exception cref="InvalidOperationException">Thrown on undefined Enum value.</exception>
     /// <exception cref="NotImplementedException"></exception>
-    /// <exception cref="UnreachableException"></exception>
     public static string ToString(this WorkStatisticTypes type, bool _)
     {
         return type switch
@@ -45,7 +77,7 @@ public static class WorkStatisticTypesMethods
             WorkStatisticTypes.Kudos => "kudos",
             WorkStatisticTypes.CommentThreads => "comments",
             WorkStatisticTypes.Bookmarks => "bookmarks",
-            _ => throw new UnreachableException("Undefined enum value."),
+            _ => throw new InvalidOperationException("Undefined enum value."),
         };
     }
 }
