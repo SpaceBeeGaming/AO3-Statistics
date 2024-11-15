@@ -73,7 +73,7 @@ jobs:
     - name: Setup .NET ${{matrix.dotnet-version}}     
       uses: actions/setup-dotnet@v4
       with: 
-        dotnet-version: '9.x'
+        dotnet-version: '8.x'
 
     # If the analyze step fails for one of the languages you are analyzing with
     # "We were unable to automatically build your code", modify the matrix above
@@ -86,7 +86,7 @@ jobs:
       shell: bash
       run: |
         dotnet restore
-        dotnet build -f net9.0 --no-restore
+        dotnet build -f net8.0 --no-restore
         exit 1
 
     - name: Perform CodeQL Analysis
