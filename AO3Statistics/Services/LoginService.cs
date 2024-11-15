@@ -52,7 +52,7 @@ public class LoginService(ILogger<LoginService> logger,
 
         // Check if we're already logged in. No need to try to do it twice.
         // This condition should never be met unless this program has a bug.
-        if (htmlNavigationService.IsDocumentLoaded && htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedId)
+        if (htmlNavigationService.IsDocumentLoaded && htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedIn)
         {
             logger.LogInformation("Already logged in.");
             return true;
@@ -85,7 +85,7 @@ public class LoginService(ILogger<LoginService> logger,
 
         // Check if we logged in successfully or not.
         htmlNavigationService.LoadDocument(await postResponse.Content.ReadAsStreamAsync());
-        if (htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedId)
+        if (htmlNavigationService.GetLoggedInStatus() is LoggedInStatus.LoggedIn)
         {
             logger.LogInformation("Successfully logged in as {Username}", userOptions.Value.Username);
             return true;

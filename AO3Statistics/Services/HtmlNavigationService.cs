@@ -53,7 +53,7 @@ public sealed class HtmlNavigationService(
         string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-"), string.Empty);
         return classString switch
         {
-            "logged-in" => LoggedInStatus.LoggedId,
+            "logged-in" => LoggedInStatus.LoggedIn,
             "logged-out" => LoggedInStatus.LoggedOut,
             _ => throw new UnreachableException("AO3 html body always has a login state class. Thus the default branch will never match."),
         };
