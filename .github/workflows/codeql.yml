@@ -87,7 +87,6 @@ jobs:
       run: |
         dotnet restore
         dotnet build -f net8.0 --no-restore
-        exit 1
 
     - name: Perform CodeQL Analysis
       uses: github/codeql-action/analyze@v3
