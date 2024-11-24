@@ -57,7 +57,7 @@ public class AO3Api(
             return null;
         }
 
-        var workStatistics = htmlNavigationService.GetWorkStatistics();
+        (bool IsSuccess, List<WorkStatisticsModel> WorkStatistics) workStatistics = htmlNavigationService.GetWorkStatistics();
 
         if (workStatistics.IsSuccess is false)
         {
