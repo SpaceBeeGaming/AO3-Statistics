@@ -50,7 +50,7 @@ public sealed class HtmlNavigationService(
         ThrowIfDocumentNull(_document);
 
         HtmlNode node = SelectSingleNodeFromRoot(_document, "//body");
-        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-"), string.Empty);
+        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-", StringComparison.InvariantCultureIgnoreCase), string.Empty);
         return classString switch
         {
             "logged-in" => LoggedInStatus.LoggedIn,

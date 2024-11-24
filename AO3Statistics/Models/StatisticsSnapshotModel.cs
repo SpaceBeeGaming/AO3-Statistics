@@ -56,7 +56,7 @@ public sealed class StatisticsSnapshotModel(DateOnly date)
     public string ToString(bool _)
     {
         StringBuilder stringBuilder = new();
-        stringBuilder.AppendLine($"Date:               {Date.ToString("o")}");
+        stringBuilder.AppendLine(CultureInfo.InvariantCulture, $"Date:               {Date:o}");
         stringBuilder.AppendLine();
         stringBuilder.AppendLine("User Statistics:");
         stringBuilder.AppendLine(UserStatistics.ToString(true));
