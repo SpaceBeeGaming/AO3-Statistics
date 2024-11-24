@@ -325,13 +325,13 @@ public sealed class HtmlNavigationService(
                 switch (workName)
                 {
                     case "<>":
-                        logger.LogWarning("""Error parsing {statisticType} on user statistics.""", statistic.Key);
+                        logger.LogWarning("Error parsing {StatisticType} on user statistics.", statistic.Key);
                         break;
                     case null:
-                        logger.LogWarning("""Error parsing {statisticType} on unknown work.""", statistic.Key);
+                        logger.LogWarning("Error parsing {StatisticType} on unknown work.", statistic.Key);
                         break;
                     default:
-                        logger.LogWarning("""Error parsing {statisticType} on work "{WorkName}".""", statistic.Key, workName);
+                        logger.LogWarning("""Error parsing {StatisticType} on work "{WorkName}".""", statistic.Key, workName);
                         break;
                 }
             }

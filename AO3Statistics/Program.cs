@@ -78,7 +78,7 @@ try
 
     int exitCode = await host.Services.GetRequiredService<MainLogic>().Run();
 
-    host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with exit code: {exitCode}", exitCode);
+    host.Services.GetRequiredService<ILogger<Program>>().LogInformation("Exiting with exit code: {ExitCode}", exitCode);
     Environment.ExitCode = exitCode;
 }
 catch (OptionsValidationException ex)
