@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AO3Statistics;
-internal class MainLogic(
+internal sealed class MainLogic(
     ILogger<MainLogic> logger,
     AO3Api aO3Api,
     IOptions<UserOptions> userOptions,

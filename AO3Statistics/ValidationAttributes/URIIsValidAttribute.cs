@@ -1,7 +1,7 @@
 ﻿using System.ComponentModel.DataAnnotations;
 
 namespace AO3Statistics.ValidationAttributes;
-internal class URIIsValidAttribute(string host, string scheme = "https") : ValidationAttribute
+internal sealed class URIIsValidAttribute(string host, string scheme = "https") : ValidationAttribute
 {
     private readonly string host = host;
     private readonly string scheme = scheme;
