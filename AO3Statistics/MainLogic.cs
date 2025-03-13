@@ -72,7 +72,6 @@ internal sealed class MainLogic(
 
         StatisticsSnapshotModel? statisticsSnapshot = await aO3Api.GetStatisticsSnapshotAsync();
         logger.LogInformation("{StatisticsSnapshot}", statisticsSnapshot?.ToString(true));
-        await aO3Api.LogoutAsync();
 
         if (statisticsSnapshot is null)
         {
@@ -80,6 +79,9 @@ internal sealed class MainLogic(
         }
 
         dataDestination.SaveData(statisticsSnapshot);
+
+        await aO3Api.LogoutAsync();
+
         return 0;
     }
 }
