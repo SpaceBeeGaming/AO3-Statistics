@@ -1,13 +1,13 @@
-﻿using System.Text;
+﻿using System.Diagnostics.CodeAnalysis;
+using System.Globalization;
+using System.Text;
 
 namespace AO3Statistics.Models;
 
 /// <summary>
 /// Contains the combined user and work statistics.
 /// </summary>
-#pragma warning disable CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 public sealed class StatisticsSnapshotModel(DateOnly date)
-#pragma warning restore CS8618 // Non-nullable field must contain a non-null value when exiting constructor. Consider declaring as nullable.
 {
     private List<WorkStatisticsModel> _workStatistics;
     private UserStatisticsModel _userStatistics;
@@ -16,13 +16,18 @@ public sealed class StatisticsSnapshotModel(DateOnly date)
     /// Date of creation.
     /// </summary>
     public DateOnly Date { get; init; } = date;
+
     /// <summary>
     /// A list containing the statistics for users works.
     /// </summary>
     public required List<WorkStatisticsModel> WorkStatistics
     {
-        get => _workStatistics; init
+        get => _workStatistics;
+
+        [MemberNotNull(nameof(_workStatistics))]
+        init
         {
+            ArgumentNullException.ThrowIfNull(value);
             _workStatistics = value;
             _workStatistics.ForEach(x => x.Date = Date);
         }
@@ -33,8 +38,11 @@ public sealed class StatisticsSnapshotModel(DateOnly date)
     /// </summary>
     public required UserStatisticsModel UserStatistics
     {
-        get => _userStatistics; init
+        get => _userStatistics;
+        [MemberNotNull(nameof(_userStatistics))]
+        init
         {
+            ArgumentNullException.ThrowIfNull(value);
             _userStatistics = value;
             _userStatistics.Date = Date;
         }
@@ -48,7 +56,7 @@ public sealed class StatisticsSnapshotModel(DateOnly date)
     public string ToString(bool _)
     {
         StringBuilder stringBuilder = new();
-        stringBuilder.AppendLine($"Date:               {Date.ToString("o")}");
+        stringBuilder.AppendLine(CultureInfo.InvariantCulture, $"Date:               {Date:o}");
         stringBuilder.AppendLine();
         stringBuilder.AppendLine("User Statistics:");
         stringBuilder.AppendLine(UserStatistics.ToString(true));

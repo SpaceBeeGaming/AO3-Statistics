@@ -51,10 +51,7 @@ public sealed class HtmlNavigationException : Exception
     /// </summary>
     /// <param name="message">The error message that explains the reason for the exception.</param>
     /// <param name="xPath">The XPath expression that caused the exception.</param>
-    public HtmlNavigationException(string? message, string? xPath) : base(message)
-    {
-        XPath = xPath;
-    }
+    public HtmlNavigationException(string? message, string? xPath) : base(message) => XPath = xPath;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlNavigationException"/> class with a specified error message, XPath expression, and HTML document.
@@ -62,28 +59,19 @@ public sealed class HtmlNavigationException : Exception
     /// <param name="message">The error message that explains the reason for the exception.</param>
     /// <param name="xPath">The XPath expression that caused the exception.</param>
     /// <param name="document">The HTML document associated with the exception.</param>
-    public HtmlNavigationException(string? message, string? xPath, HtmlDocument? document) : this(message, xPath)
-    {
-        Document = document;
-    }
+    public HtmlNavigationException(string? message, string? xPath, HtmlDocument? document) : this(message, xPath) => Document = document;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlNavigationException"/> class with a specified error message and HTML document.
     /// </summary>
     /// <param name="message">The error message that explains the reason for the exception.</param>
     /// <param name="document">The HTML document associated with the exception.</param>
-    public HtmlNavigationException(string? message, HtmlDocument? document) : base(message)
-    {
-        Document = document;
-    }
+    public HtmlNavigationException(string? message, HtmlDocument? document) : base(message) => Document = document;
 
     /// <summary>
     /// Initializes a new instance of the <see cref="HtmlNavigationException"/> class with a specified error message and HTML node.
     /// </summary>
     /// <param name="message">The error message that explains the reason for the exception.</param>
     /// <param name="node">The HTML node associated with the exception.</param>
-    public HtmlNavigationException(string? message, HtmlNode? node) : base(message)
-    {
-        Node = node;
-    }
+    public HtmlNavigationException(string? message, HtmlNode? node) : base(message) => Node = node;
 }

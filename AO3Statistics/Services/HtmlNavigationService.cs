@@ -50,7 +50,7 @@ public sealed class HtmlNavigationService(
         ThrowIfDocumentNull(_document);
 
         HtmlNode node = SelectSingleNodeFromRoot(_document, "//body");
-        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-"), string.Empty);
+        string classString = node.GetClasses().FirstOrDefault(x => x.StartsWith("logged-", StringComparison.InvariantCultureIgnoreCase), string.Empty);
         return classString switch
         {
             "logged-in" => LoggedInStatus.LoggedIn,
@@ -82,13 +82,13 @@ public sealed class HtmlNavigationService(
     /// <returns>The user statistics.</returns>
     public UserStatisticsModel? GetUserStatistics()
     {
-        var userSubscriptions = GetUserStatisticValue(UserStatisticTypes.UserSubscriptions);
-        var kudos = GetUserStatisticValue(UserStatisticTypes.Kudos);
-        var commentThreads = GetUserStatisticValue(UserStatisticTypes.CommentThreads);
-        var bookmarks = GetUserStatisticValue(UserStatisticTypes.Bookmarks);
-        var subscriptions = GetUserStatisticValue(UserStatisticTypes.Subscriptions);
-        var wordCount = GetUserStatisticValue(UserStatisticTypes.WordCount);
-        var hits = GetUserStatisticValue(UserStatisticTypes.Hits);
+        (bool IsSuccess, int value) userSubscriptions = GetUserStatisticValue(UserStatisticTypes.UserSubscriptions);
+        (bool IsSuccess, int value) kudos = GetUserStatisticValue(UserStatisticTypes.Kudos);
+        (bool IsSuccess, int value) commentThreads = GetUserStatisticValue(UserStatisticTypes.CommentThreads);
+        (bool IsSuccess, int value) bookmarks = GetUserStatisticValue(UserStatisticTypes.Bookmarks);
+        (bool IsSuccess, int value) subscriptions = GetUserStatisticValue(UserStatisticTypes.Subscriptions);
+        (bool IsSuccess, int value) wordCount = GetUserStatisticValue(UserStatisticTypes.WordCount);
+        (bool IsSuccess, int value) hits = GetUserStatisticValue(UserStatisticTypes.Hits);
 
         Dictionary<UserStatisticTypes, bool> userStatistics = new()
         {
@@ -320,18 +320,18 @@ public sealed class HtmlNavigationService(
     {
         if (statistics.Any(x => x.Value is not true))
         {
-            foreach (var statistic in statistics.Where(x => x.Value is not true))
+            foreach (KeyValuePair<T, bool> statistic in statistics.Where(x => x.Value is not true))
             {
                 switch (workName)
                 {
                     case "<>":
-                        logger.LogWarning("""Error parsing {statisticType} on user statistics.""", statistic.Key);
+                        logger.LogWarning("Error parsing {StatisticType} on user statistics.", statistic.Key);
                         break;
                     case null:
-                        logger.LogWarning("""Error parsing {statisticType} on unknown work.""", statistic.Key);
+                        logger.LogWarning("Error parsing {StatisticType} on unknown work.", statistic.Key);
                         break;
                     default:
-                        logger.LogWarning("""Error parsing {statisticType} on work "{WorkName}".""", statistic.Key, workName);
+                        logger.LogWarning("""Error parsing {StatisticType} on work "{WorkName}".""", statistic.Key, workName);
                         break;
                 }
             }

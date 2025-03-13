@@ -1,4 +1,6 @@
-﻿using System.Security.Cryptography;
+﻿#if WINDOWS
+using System.Security.Cryptography;
+#endif
 using System.Text;
 
 namespace AO3Statistics;

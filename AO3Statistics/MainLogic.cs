@@ -6,7 +6,7 @@ using Microsoft.Extensions.Logging;
 using Microsoft.Extensions.Options;
 
 namespace AO3Statistics;
-internal class MainLogic(
+internal sealed class MainLogic(
     ILogger<MainLogic> logger,
     AO3Api aO3Api,
     IOptions<UserOptions> userOptions,
@@ -72,7 +72,6 @@ internal class MainLogic(
 
         StatisticsSnapshotModel? statisticsSnapshot = await aO3Api.GetStatisticsSnapshotAsync();
         logger.LogInformation("{StatisticsSnapshot}", statisticsSnapshot?.ToString(true));
-        await aO3Api.LogoutAsync();
 
         if (statisticsSnapshot is null)
         {
@@ -80,6 +79,9 @@ internal class MainLogic(
         }
 
         dataDestination.SaveData(statisticsSnapshot);
+
+        await aO3Api.LogoutAsync();
+
         return 0;
     }
 }

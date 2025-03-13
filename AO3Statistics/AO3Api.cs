@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-using AO3Statistics.Models;
+﻿using AO3Statistics.Models;
 using AO3Statistics.Services;
 
 using Microsoft.Extensions.Logging;
@@ -11,12 +9,12 @@ public class AO3Api(
     ILogger<AO3Api> logger,
     IOptions<UrlOptions> urlOptions,
     HtmlNavigationService htmlNavigationService,
-    HttpClient httpClient,
+    HttpHelper httpHelper,
     LoginService loginService)
 {
     private readonly ILogger<AO3Api> logger = logger;
     private readonly HtmlNavigationService htmlNavigationService = htmlNavigationService;
-    private readonly HttpClient httpClient = httpClient;
+    private readonly HttpHelper httpHelper = httpHelper;
     private readonly LoginService loginService = loginService;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;
 
@@ -36,11 +34,8 @@ public class AO3Api(
     public async Task<StatisticsSnapshotModel?> GetStatisticsSnapshotAsync()
     {
         // HTTP GET the statistics page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.StatsUrl);
-        if (getResponse.StatusCode is HttpStatusCode.Moved)
-        {
-            getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
-        }
+        logger.LogInformation("GET Statistics page");
+        HttpResponseMessage getResponse = await httpHelper.RedirectGet(urlOptions.Value.StatsUrl);
 
         if (!getResponse.IsSuccessStatusCode)
         {
@@ -57,7 +52,7 @@ public class AO3Api(
             return null;
         }
 
-        var workStatistics = htmlNavigationService.GetWorkStatistics();
+        (bool IsSuccess, List<WorkStatisticsModel> WorkStatistics) workStatistics = htmlNavigationService.GetWorkStatistics();
 
         if (workStatistics.IsSuccess is false)
         {

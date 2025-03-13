@@ -1,6 +1,4 @@
-﻿using System.Net;
-
-using AO3Statistics.Enums;
+﻿using AO3Statistics.Enums;
 using AO3Statistics.ExtensionMethods;
 using AO3Statistics.Models;
 
@@ -12,11 +10,11 @@ public class LoginService(ILogger<LoginService> logger,
     IOptions<UrlOptions> urlOptions,
     IOptions<UserOptions> userOptions,
     HtmlNavigationService htmlNavigationService,
-    HttpClient httpClient)
+    HttpHelper httpHelper)
 {
     private readonly ILogger<LoginService> logger = logger;
     private readonly HtmlNavigationService htmlNavigationService = htmlNavigationService;
-    private readonly HttpClient httpClient = httpClient;
+    private readonly HttpHelper httpHelper = httpHelper;
     private readonly IOptions<UrlOptions> urlOptions = urlOptions;
     private readonly IOptions<UserOptions> userOptions = userOptions;
 
@@ -35,11 +33,8 @@ public class LoginService(ILogger<LoginService> logger,
         }
 
         // HTTP GET the login page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LoginUrl);
-        while (getResponse.StatusCode is HttpStatusCode.Moved)
-        {
-            getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
-        }
+        logger.LogInformation("GET Login page");
+        HttpResponseMessage getResponse = await httpHelper.RedirectGet(urlOptions.Value.LoginUrl);
 
         if (!getResponse.IsSuccessStatusCode)
         {
@@ -66,16 +61,8 @@ public class LoginService(ILogger<LoginService> logger,
         };
 
         // HTTP POST the credentials.
-        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LoginUrl, new FormUrlEncodedContent(content));
-        while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
-        {
-            postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
-        }
-
-        while (postResponse.StatusCode is HttpStatusCode.Redirect)
-        {
-            postResponse = await httpClient.GetAsync(postResponse.Headers.Location);
-        }
+        logger.LogInformation("POST Credentials");
+        HttpResponseMessage postResponse = await httpHelper.RedirectPost(urlOptions.Value.LoginUrl, content);
 
         if (!postResponse.IsSuccessStatusCode)
         {
@@ -105,11 +92,8 @@ public class LoginService(ILogger<LoginService> logger,
     public async Task LogoutAsync()
     {
         // HTTP GET the logout page.
-        HttpResponseMessage getResponse = await httpClient.GetAsync(urlOptions.Value.LogOutUrl);
-        while (getResponse.StatusCode is HttpStatusCode.Moved)
-        {
-            getResponse = await httpClient.GetAsync(getResponse.Headers.Location);
-        }
+        logger.LogInformation("GET Logout page");
+        HttpResponseMessage getResponse = await httpHelper.RedirectGet(urlOptions.Value.LogOutUrl);
 
         if (!getResponse.IsSuccessStatusCode)
         {
@@ -132,16 +116,8 @@ public class LoginService(ILogger<LoginService> logger,
             { "_method", "delete" }
         };
 
-        HttpResponseMessage postResponse = await httpClient.PostAsync(urlOptions.Value.LogOutUrl, new FormUrlEncodedContent(content));
-        while (postResponse.StatusCode is HttpStatusCode.Moved) // Should Be RedirectKeepVerb (307), but Cloudflare returns 301.
-        {
-            postResponse = await httpClient.PostAsync(postResponse.Headers.Location, new FormUrlEncodedContent(content));
-        }
-
-        while (postResponse.StatusCode is HttpStatusCode.Redirect)
-        {
-            postResponse = await httpClient.GetAsync(postResponse.Headers.Location);
-        }
+        logger.LogInformation("POST Logout");
+        HttpResponseMessage postResponse = await httpHelper.RedirectPost(urlOptions.Value.LogOutUrl, content);
 
         if (!postResponse.IsSuccessStatusCode)
         {
