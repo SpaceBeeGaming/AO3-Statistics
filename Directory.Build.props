@@ -7,7 +7,7 @@
 	  <ProductName>$(Title)</ProductName>
 	  <Product>$(Title)</Product>
 
-	  <VersionPrefix>2.0.4</VersionPrefix>
+	  <VersionPrefix>2.0.3</VersionPrefix>
 	  <IncludeSourceRevisionInInformationalVersion>false</IncludeSourceRevisionInInformationalVersion>
 	  
 	  <Authors>SpaceBeeGaming</Authors>
